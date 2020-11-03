@@ -123,7 +123,7 @@ const StyledContent = styled.div`
       transform: rotateY(180deg);
     }
   }
-  @media screen and (min-width: 400px) {
+  @media screen and (min-width: 500px) {
     .content {
       h1 {
         font-size: 5.5rem;
@@ -143,7 +143,7 @@ const StyledContent = styled.div`
       }
     }
   }
-  @media screen and (min-width: 400px) and (orientation: landscape) {
+  @media screen and (min-width: 500px) and (orientation: landscape) {
     width: 60%;
     height: 100%;
     top: 0;

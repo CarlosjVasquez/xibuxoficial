@@ -40,7 +40,7 @@ const HeaderStyled = styled.header`
   .cont-header {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     height: 100%;
     .logo {
@@ -74,8 +74,9 @@ const HeaderStyled = styled.header`
       display: none;
     }
   }
-  @media screen and (min-width: 400px) {
+  @media screen and (min-width: 500px) {
     .cont-header {
+      justify-content: space-between;
       .logo {
         display: block;
         height: 50px;
