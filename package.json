@@ -8,8 +8,25 @@
     "start": "next start"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.35",
+    "@emotion/styled": "^10.0.27",
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-brands-svg-icons": "^5.15.1",
+    "@fortawesome/free-regular-svg-icons": "^5.15.1",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.11",
+    "dotenv": "^8.2.0",
+    "drei": "^1.5.7",
+    "emotion-theming": "^10.0.27",
+    "isomorphic-unfetch": "^3.0.0",
+    "lerp": "^1.0.3",
     "next": "9.5.3",
+    "polished": "^3.6.6",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "react-spring": "^8.0.27",
+    "react-three-fiber": "^5.1.4",
+    "three": "^0.121.1",
+    "three.interaction": "^0.2.3"
   }
 }

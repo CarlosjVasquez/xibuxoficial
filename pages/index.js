@@ -1,65 +1,72 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import fetch from "isomorphic-unfetch";
+import { useState } from "react";
+import dynamic from "next/dynamic";
 
-export default function Home() {
+import Header from "../components/Header/Header";
+import SocialMedia from "../components/SocialMedia";
+import Slider from "../components/Sliders/SliderOne";
+import ContentDetail from "../components/ContentDetail/ContentDetail";
+
+const SceneOne = dynamic(() => import("../components/Scenes/SceneThree"), {
+  ssr: false,
+});
+
+export default function Home({ links, linksSocial, category }) {
+  const [activeMenu, setActiveMenu] = useState(1);
+  const [modelActive, setModelActive] = useState(1);
+  const [project, setProject] = useState(false);
+
+  const onHandleContent = () => {
+    setProject(!project);
+    setActiveMenu(() => (activeMenu == 1 ? 0 : !project ? 0 : 1));
+  };
+
   return (
-    <div className={styles.container}>
+    <>
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Xibux Studio - Home</title>
       </Head>
+      <Header
+        links={links}
+        first={1}
+        onHandleClick={() => setActiveMenu(activeMenu == 1 ? 0 : 1)}
+        active={activeMenu}
+        project={project}
+      />
+      <SocialMedia linksSocial={linksSocial} />
+      <SceneOne category={category} active={modelActive} project={project} />
+      <ContentDetail
+        category={category}
+        active={modelActive}
+        project={project}
+        onClickHandle={onHandleContent}
+      />
+      <Slider
+        category={category}
+        active={modelActive}
+        onClickHandle={(index) => setModelActive(index)}
+      />
+    </>
+  );
+}
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+export async function getServerSideProps() {
+  const { API_URL } = process.env;
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+  const resNav = await fetch(`${API_URL}/menu-links`);
+  const resSocial = await fetch(`${API_URL}/social-medias`);
+  const resCategory = await fetch(`${API_URL}/categorias`);
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+  const dataNav = await resNav.json();
+  const dataSocial = await resSocial.json();
+  const dataCategory = await resCategory.json();
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+  return {
+    props: {
+      links: dataNav,
+      linksSocial: dataSocial,
+      category: dataCategory,
+    },
+  };
 }
