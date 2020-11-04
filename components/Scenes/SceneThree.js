@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 import * as THREE from "three";
-import { Canvas, useFrame, extend, useThree } from "react-three-fiber";
+import { Canvas } from "react-three-fiber";
 import { OrbitControls } from "drei";
 
-import { Suspense, useRef } from "react";
+import { Suspense } from "react";
 import Model from "./Model";
 
 export default function SceneThree({ category, active, project }) {

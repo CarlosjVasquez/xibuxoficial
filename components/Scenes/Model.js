@@ -4,8 +4,7 @@ import { useRef } from "react";
 import { useSpring, a } from "react-spring/three";
 
 export default function Model({ category, animated, project }) {
-  const { API_URL } = process.env;
-  const loader = useLoader(GLTFLoader, `${API_URL + category.modelo[0].url}`);
+  const loader = useLoader(GLTFLoader, `${category.modelo[0].url}`);
   const object = loader.scene;
   const ref = useRef();
   const props = useSpring({
