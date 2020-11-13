@@ -1,22 +1,49 @@
 import styled from "@emotion/styled";
+import { useEffect, useState } from "react";
 import LogoMenutwo from "../Logos/Menutwo";
 import LinkNav from "./LinkNav";
 
-export default function Header({ links, first, onHandleClick, active }) {
+export default function Header({ links, first, onHandleClick, active, white }) {
+  const [mode, setMode] = useState(white);
+  const [back, setBack] = useState(false);
+  useEffect(() => {
+    const scroll = () => {
+      if (window.scrollY >= 250) {
+        setMode(false);
+        setBack(true);
+      } else {
+        setMode(true);
+        setBack(false);
+      }
+    };
+
+    window.addEventListener("scroll", scroll);
+    return () => {
+      window.removeEventListener("scroll", scroll);
+    };
+  });
+
   return (
     <>
-      <HeaderStyled>
+      <HeaderStyled
+        back={back ? "#fff" : "transparent"}
+        box={back ? "0px 0px 4px 0px #3b3b3b99" : "none"}
+      >
         <div className="cont-header">
           <div className="logo">
-            <img src="/images/xibux-logo.png" alt="Xibux Logo" />
+            {mode ? (
+              <img src="/images/xibux.png" alt="Xibux Logo" />
+            ) : (
+              <img src="/images/xibux-logo.png" alt="Xibux Logo" />
+            )}
           </div>
           <div className={active == 1 ? "menu show-menu" : "menu hide-menu"}>
-            <LinkNav links={links} first={first} />
+            <LinkNav links={links} first={first} color={mode ? "1" : 0} />
           </div>
           <div className="btn">
             <LogoMenutwo
               height="40px"
-              fill="#021154"
+              fill={mode ? "#fff" : "#021154"}
               fillpoint="#0DFF7C"
               fillsecond="#FF6200"
               onClick={onHandleClick}
@@ -30,13 +57,16 @@ export default function Header({ links, first, onHandleClick, active }) {
 }
 
 const HeaderStyled = styled.header`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   padding: 10px 20px;
   height: 80px;
   z-index: 15;
+  background: ${(props) => props.back};
+  box-shadow: ${(props) => props.box};
+  transition: all 0.3s linear;
   .cont-header {
     display: flex;
     flex-direction: row;

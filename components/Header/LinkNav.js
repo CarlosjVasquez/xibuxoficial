@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 import Point from "../Logos/Point";
 
-export default function LinkNav({ links, first }) {
+export default function LinkNav({ links, first, color }) {
   const [active, setActive] = useState(first);
 
   const LinkItems = () => {
@@ -54,10 +54,11 @@ export default function LinkNav({ links, first }) {
   };
 
   return (
-    <StyledLinkNav>
+    <StyledLinkNav color={color}>
       <Point
         active={active <= 0 ? false : true}
         onClickHandle={ClickLeft}
+        color={color == "1" ? true : false}
         fillstroke="#3b3b3b"
         fillmed="#021154"
       />
@@ -65,6 +66,7 @@ export default function LinkNav({ links, first }) {
       <Point
         active={active >= links.length - 1 ? false : true}
         onClickHandle={ClickRight}
+        color={color == "1" ? true : false}
         fillstroke="#3b3b3b"
         fillmed="#021154"
       />
@@ -104,7 +106,7 @@ const StyledLinkNav = styled.div`
       a {
         text-transform: uppercase;
         text-decoration: none;
-        color: #3b3b3b;
+        color: ${(props) => (props.color ? "#fff" : "#3b3b3b")};
         font-weight: 300;
       }
     }

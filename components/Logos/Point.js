@@ -18,7 +18,7 @@ function Point(props) {
   );
 }
 
-function LogoAnimated({ active, onClickHandle, fillstroke, fillmed }) {
+function LogoAnimated({ active, onClickHandle, fillstroke, fillmed, color }) {
   return (
     <LogoAnimatedstyled
       className={active ? "btn-slider" : "btn-slider-null"}
@@ -26,8 +26,8 @@ function LogoAnimated({ active, onClickHandle, fillstroke, fillmed }) {
     >
       <Point
         className="svg"
-        fillstroke={fillstroke}
-        fillmed={fillmed}
+        fillstroke={color ? "#fff" : fillstroke}
+        fillmed={color ? "#fff" : fillmed}
         animated={active ? "stroke animated" : "animated-null"}
       />
     </LogoAnimatedstyled>

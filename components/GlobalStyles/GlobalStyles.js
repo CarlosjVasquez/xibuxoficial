@@ -12,7 +12,6 @@ const GlobalStyles = () => (
 
         body {
           margin: 0;
-          overflow: hidden;
         }
 
         article,

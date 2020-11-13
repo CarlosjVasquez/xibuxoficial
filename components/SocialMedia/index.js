@@ -23,7 +23,7 @@ export default function SocialMedia({ linksSocial }) {
 }
 
 const StyledSocialMedia = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   padding: 10px 20px;

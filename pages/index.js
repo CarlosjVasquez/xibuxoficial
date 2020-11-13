@@ -2,6 +2,7 @@ import Head from "next/head";
 import fetch from "isomorphic-unfetch";
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import styled from "@emotion/styled";
 
 import Header from "../components/Header/Header";
 import SocialMedia from "../components/SocialMedia";
@@ -23,7 +24,7 @@ export default function Home({ links, linksSocial, category }) {
   };
 
   return (
-    <>
+    <StyledIndex>
       <Head>
         <title>Xibux Studio - Home</title>
       </Head>
@@ -47,9 +48,13 @@ export default function Home({ links, linksSocial, category }) {
         active={modelActive}
         onClickHandle={(index) => setModelActive(index)}
       />
-    </>
+    </StyledIndex>
   );
 }
+
+const StyledIndex = styled.div`
+  overflow: hidden;
+`;
 
 export async function getServerSideProps() {
   const { API_URL } = process.env;
