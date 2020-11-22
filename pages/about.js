@@ -10,6 +10,10 @@ export default function About({ links, linksSocial, infoAbout, loader }) {
   const [load, setLoad] = useState(false);
   const [showTeam, setShowTeam] = useState(false);
   const [usersTeam, setUsersTeam] = useState(false);
+  const [imgUno, setImgUno] = useState(false);
+  const [imgDos, setImgDos] = useState(false);
+  const [imgBanner, setImgBanner] = useState(false);
+
   const banner = useRef();
   const des = useRef();
   const team = useRef();
@@ -39,6 +43,9 @@ export default function About({ links, linksSocial, infoAbout, loader }) {
       contact.current &&
       des.current &&
       banner.current &&
+      imgUno &&
+      imgDos &&
+      imgBanner &&
       !loader
     ) {
       setTimeout(() => {
@@ -60,14 +67,21 @@ export default function About({ links, linksSocial, infoAbout, loader }) {
         onHandleClick={() => setActiveMenu(activeMenu == 1 ? 0 : 1)}
         active={activeMenu}
         white={true}
+        load={load}
       />
       <SocialMedia linksSocial={linksSocial} />
-
-      <StyledBanner ref={banner} imgBanner={infoAbout[0].img_banner.url}>
+      <StyledBanner ref={banner}>
         <div className={load ? "logo active" : "logo"}>
           <img id="img" src="./images/logo.svg" alt="" />
         </div>
         <div className={load ? "title active" : "title"}>
+          <div className="imgback">
+            <img
+              onLoad={() => setImgBanner(true)}
+              src={infoAbout[0].img_banner.url}
+              alt=""
+            />
+          </div>
           <p>{infoAbout[0].titulo}</p>
         </div>
       </StyledBanner>
@@ -77,10 +91,18 @@ export default function About({ links, linksSocial, infoAbout, loader }) {
         </div>
         <div className="gallery">
           <div className={load ? "img active" : "img"}>
-            <img src={infoAbout[0].img_description1.url} alt="" />
+            <img
+              onLoad={() => setImgUno(true)}
+              src={infoAbout[0].img_description1.url}
+              alt=""
+            />
           </div>
           <div className={load ? "img active" : "img"}>
-            <img src={infoAbout[0].img_description2.url} alt="" />
+            <img
+              onLoad={() => setImgDos(true)}
+              src={infoAbout[0].img_description2.url}
+              alt=""
+            />
           </div>
         </div>
       </StyledDescription>
@@ -381,6 +403,7 @@ const StyledBanner = styled.div`
     transition: all 0.5s ease;
   }
   .title {
+    position: relative;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -388,13 +411,23 @@ const StyledBanner = styled.div`
     font-size: 15rem;
     font-style: oblique;
     font-weight: 600;
-    background: url(${(props) => props.imgBanner});
-    background-size: cover;
     color: #fff;
     padding: 80px 0 60px 0;
     text-transform: uppercase;
     transform: translateX(100%);
     transition: all 0.5s ease;
+    .imgback {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      img {
+        min-height: 100%;
+        min-width: 100%;
+      }
+    }
   }
   .active {
     transform: translateX(0);

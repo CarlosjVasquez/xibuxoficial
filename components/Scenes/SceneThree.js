@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { Canvas } from "react-three-fiber";
 import { OrbitControls } from "drei";
 
-import { Suspense } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import Model from "./Model";
 
 export default function SceneThree({ category, active, project }) {
@@ -53,8 +53,8 @@ const StyledCanvas = styled.div`
   background: rgb(255, 255, 255);
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0) 40%,
-    rgba(149, 217, 246, 0.5) 100%
+    rgba(255, 255, 255, 1) 40%,
+    rgba(149, 217, 246, 1) 100%
   );
   canvas {
     outline: none;

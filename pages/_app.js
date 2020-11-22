@@ -22,6 +22,7 @@ const theme = {
 export default function MyApp({ Component, pageProps }) {
   const [loader, setLoader] = useState(false);
   const router = useRouter();
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     router.events.on("routeChangeStart", () => start());
@@ -33,7 +34,7 @@ export default function MyApp({ Component, pageProps }) {
       router.events.off("routeChangeComplete", () => done());
       router.events.off("routeChangeError", () => done());
     };
-  }, []);
+  });
 
   const start = () => {
     NProgress.start();

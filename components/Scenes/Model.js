@@ -1,6 +1,6 @@
 import { useLoader } from "react-three-fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useSpring, a } from "react-spring/three";
 
 export default function Model({ category, animated, project }) {

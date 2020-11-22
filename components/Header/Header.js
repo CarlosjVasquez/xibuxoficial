@@ -3,7 +3,14 @@ import { useEffect, useState } from "react";
 import LogoMenutwo from "../Logos/Menutwo";
 import LinkNav from "./LinkNav";
 
-export default function Header({ links, first, onHandleClick, active, white }) {
+export default function Header({
+  links,
+  first,
+  onHandleClick,
+  active,
+  white,
+  load,
+}) {
   const [mode, setMode] = useState(white);
   const [back, setBack] = useState(false);
   useEffect(() => {
@@ -28,6 +35,7 @@ export default function Header({ links, first, onHandleClick, active, white }) {
       <HeaderStyled
         back={back ? "#fff" : "transparent"}
         box={back ? "0px 0px 4px 0px #3b3b3b99" : "none"}
+        load={load}
       >
         <div className="cont-header">
           <div className="logo">
@@ -66,6 +74,7 @@ const HeaderStyled = styled.header`
   z-index: 15;
   background: ${(props) => props.back};
   box-shadow: ${(props) => props.box};
+  transform: translateY(${(props) => (props.load ? "0" : "-100%")});
   transition: all 0.3s linear;
   .cont-header {
     display: flex;

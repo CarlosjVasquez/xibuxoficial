@@ -8,11 +8,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import styled from "@emotion/styled";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function Contact({ links, linksSocial, contact }) {
+export default function Contact({ links, linksSocial, contact, loader }) {
   const [activeMenu, setActiveMenu] = useState(1);
   const [videoActive, setVideoActive] = useState(1);
+  const [firstVideo, setFirstVideo] = useState(false);
+  const [secondVideo, setSecondVideo] = useState(false);
+  const [finalVideo, setFinalVideo] = useState(false);
+  const [load, setLoad] = useState(false);
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -21,6 +25,20 @@ export default function Contact({ links, linksSocial, contact }) {
   const [errVerify, setErrVerify] = useState(false);
   const [errName, setErrName] = useState("");
   const [sendProcess, setSendProcess] = useState(1);
+
+  useEffect(() => {
+    !loader &&
+      console.log(
+        firstVideo + " " + secondVideo + " " + finalVideo + " " + load
+      );
+    if (secondVideo && finalVideo && !loader) {
+      setTimeout(() => {
+        setLoad(true);
+      }, 500);
+    } else if (loader) {
+      setLoad(false);
+    }
+  });
 
   const handleClick = () => {
     if (name == "") {
@@ -326,10 +344,12 @@ export default function Contact({ links, linksSocial, contact }) {
         first={2}
         onHandleClick={() => setActiveMenu(activeMenu == 1 ? 0 : 1)}
         active={activeMenu}
+        load={load}
       />
       <SocialMedia linksSocial={linksSocial} />
-      <StyledBackVideo>
+      <StyledBackVideo load={load}>
         <video
+          onCanPlayThrough={() => setFirstVideo(true)}
           id="videoFinal"
           className={
             videoActive == 3 ? "videoactive showvideo" : "videoactive hidevideo"
@@ -338,6 +358,7 @@ export default function Contact({ links, linksSocial, contact }) {
           muted
         />
         <video
+          onCanPlayThrough={() => setSecondVideo(true)}
           className={
             videoActive == 2 ? "videoactive showvideo" : "videoactive hidevideo"
           }
@@ -347,6 +368,7 @@ export default function Contact({ links, linksSocial, contact }) {
           muted
         />
         <video
+          onCanPlayThrough={() => setFinalVideo(true)}
           className={
             videoActive == 1 ? "videoactive showvideo" : "videoactive hidevideo"
           }
@@ -617,11 +639,12 @@ const StyledForm = styled.div`
 `;
 
 const StyledBackVideo = styled.div`
+  transform: translateY();
   .videoactive {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, ${(props) => (props.load ? "-50%" : "50%")});
     min-width: 100%;
     min-height: 100%;
     width: auto;
@@ -630,6 +653,7 @@ const StyledBackVideo = styled.div`
     background-size: cover;
     transition: all 0.2s linear;
     display: none;
+    overflow: hidden;
   }
   .hidevideo {
     opacity: 0;
