@@ -10,6 +10,7 @@ export default function Header({
   active,
   white,
   load,
+  project,
 }) {
   const [mode, setMode] = useState(white);
   const [back, setBack] = useState(false);
@@ -36,6 +37,7 @@ export default function Header({
         back={back ? "#fff" : "transparent"}
         box={back ? "0px 0px 4px 0px #3b3b3b99" : "none"}
         load={load}
+        project={project}
       >
         <div className="cont-header">
           <div className="logo">
@@ -71,7 +73,7 @@ const HeaderStyled = styled.header`
   width: 100%;
   padding: 10px 20px;
   height: 80px;
-  z-index: 15;
+  z-index: ${(props) => (props.project ? 0 : 15)};
   background: ${(props) => props.back};
   box-shadow: ${(props) => props.box};
   transform: translateY(${(props) => (props.load ? "0" : "-100%")});

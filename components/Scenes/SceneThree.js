@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { Canvas } from "react-three-fiber";
 import { OrbitControls } from "drei";
 
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense } from "react";
 import Model from "./Model";
 
 export default function SceneThree({ category, active, project }) {

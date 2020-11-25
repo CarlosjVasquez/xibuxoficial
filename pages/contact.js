@@ -378,106 +378,108 @@ export default function Contact({ links, linksSocial, contact, loader }) {
           muted
         />
       </StyledBackVideo>
-      <StyledForm id="form">
-        <div className="head-form">
-          <div className="logo">
-            <img src="./images/xibux-logo.png" alt="logo xibux" />
-          </div>
-        </div>
-        {errVerify && (
-          <div className="messageError">
-            <div className="iconBox">
-              <FontAwesomeIcon
-                className="icon"
-                icon={["fas", "times-circle"]}
-              />
-            </div>
-            <div className="textBox">
-              <h1>ERROR!</h1>
-              <p>Please enter {errName} valid</p>
+      <StyledForm id="form" load={load}>
+        <div className="cont">
+          <div className="head-form">
+            <div className="logo">
+              <img src="./images/xibux-logo.png" alt="logo xibux" />
             </div>
           </div>
-        )}
-        {sendProcess == 1 ? (
-          <></>
-        ) : sendProcess == 2 ? (
-          <div className="loader">
-            <Loader type="TailSpin" color="#3b3b3b" height={40} width={40} />
+          {errVerify && (
+            <div className="messageError">
+              <div className="iconBox">
+                <FontAwesomeIcon
+                  className="icon"
+                  icon={["fas", "times-circle"]}
+                />
+              </div>
+              <div className="textBox">
+                <h1>ERROR!</h1>
+                <p>Please enter {errName} valid</p>
+              </div>
+            </div>
+          )}
+          {sendProcess == 1 ? (
+            <></>
+          ) : sendProcess == 2 ? (
+            <div className="loader">
+              <Loader type="TailSpin" color="#3b3b3b" height={40} width={40} />
+            </div>
+          ) : sendProcess == 3 ? (
+            <div className="messageSend">
+              <div className="iconBox">
+                <FontAwesomeIcon
+                  className="icon"
+                  icon={["fas", "check-circle"]}
+                />
+              </div>
+              <div className="textBox">
+                <h1>SUCCESS!</h1>
+                <p>Thank you for writing to us very soon we will contact you</p>
+              </div>
+            </div>
+          ) : (
+            <div className="messageError">
+              <div className="iconBox">
+                <FontAwesomeIcon
+                  className="icon"
+                  icon={["fas", "times-circle"]}
+                />
+              </div>
+              <div className="textBox">
+                <h1>ERROR!</h1>
+                <p>A problem has occurred, please try again later</p>
+              </div>
+            </div>
+          )}
+          <div className="content-form">
+            <InputSimple
+              id="name"
+              type="text"
+              placeholder="Name"
+              icon="user"
+              color={name != "" ? "#18CC9C" : "#3b69ff"}
+              onChange={(props) => setName(props)}
+              onInput={(props) => handleInput(props)}
+            />
+            <InputSimple
+              id="lastname"
+              type="text"
+              placeholder="Last Name"
+              icon="user"
+              color={lastName != "" ? "#18CC9C" : "#3b69ff"}
+              onChange={(props) => setLastName(props)}
+              onInput={(props) => handleInput(props)}
+            />
+            <InputSimple
+              id="email"
+              type="text"
+              placeholder="email"
+              icon="envelope"
+              color={
+                emailValidate === undefined
+                  ? "#3b69ff"
+                  : emailValidate
+                  ? "#18CC9C"
+                  : "orange"
+              }
+              onChange={(props) => confirmEmail(props)}
+              onInput={(props) => handleInput(props)}
+            />
+            <InputSimple
+              id="message"
+              type="textarea"
+              placeholder="Message"
+              icon="comment-alt"
+              color={message != "" ? "#18CC9C" : "#3b69ff"}
+              onChange={(props) => setMessage(props)}
+              onInput={(props) => handleInput(props)}
+              rows="3"
+            />
           </div>
-        ) : sendProcess == 3 ? (
-          <div className="messageSend">
-            <div className="iconBox">
-              <FontAwesomeIcon
-                className="icon"
-                icon={["fas", "check-circle"]}
-              />
-            </div>
-            <div className="textBox">
-              <h1>SUCCESS!</h1>
-              <p>Thank you for writing to us very soon we will contact you</p>
-            </div>
+          <div onClick={handleClick} className="btn">
+            <a>Send</a>
           </div>
-        ) : (
-          <div className="messageError">
-            <div className="iconBox">
-              <FontAwesomeIcon
-                className="icon"
-                icon={["fas", "times-circle"]}
-              />
-            </div>
-            <div className="textBox">
-              <h1>ERROR!</h1>
-              <p>A problem has occurred, please try again later</p>
-            </div>
-          </div>
-        )}
-        <div className="content-form">
-          <InputSimple
-            id="name"
-            type="text"
-            placeholder="Name"
-            icon="user"
-            color={name != "" ? "#18CC9C" : "#3b69ff"}
-            onChange={(props) => setName(props)}
-            onInput={(props) => handleInput(props)}
-          />
-          <InputSimple
-            id="lastname"
-            type="text"
-            placeholder="Last Name"
-            icon="user"
-            color={lastName != "" ? "#18CC9C" : "#3b69ff"}
-            onChange={(props) => setLastName(props)}
-            onInput={(props) => handleInput(props)}
-          />
-          <InputSimple
-            id="email"
-            type="text"
-            placeholder="email"
-            icon="envelope"
-            color={
-              emailValidate === undefined
-                ? "#3b69ff"
-                : emailValidate
-                ? "#18CC9C"
-                : "orange"
-            }
-            onChange={(props) => confirmEmail(props)}
-            onInput={(props) => handleInput(props)}
-          />
-          <InputSimple
-            id="message"
-            type="textarea"
-            placeholder="Message"
-            icon="comment-alt"
-            color={message != "" ? "#18CC9C" : "#3b69ff"}
-            onChange={(props) => setMessage(props)}
-            onInput={(props) => handleInput(props)}
-            rows="3"
-          />
-        </div>
-        <div onClick={handleClick} className="btn">
-          <a>Send</a>
         </div>
       </StyledForm>
     </>
@@ -487,16 +489,25 @@ export default function Contact({ links, linksSocial, contact, loader }) {
 const StyledForm = styled.div`
   position: absolute;
   top: 0;
-  right: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 40px;
-  transition: all 0.5s linear;
+  overflow: hidden;
+  .cont {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    transition: all 0.5s linear;
+  }
   .head-form {
     display: flex;
     flex-direction: column;
@@ -610,14 +621,18 @@ const StyledForm = styled.div`
     cursor: pointer;
   }
   @media screen and (min-width: 500px) and (orientation: landscape) {
-    width: 50%;
-    max-width: 400px;
-    top: 50%;
-    height: 70%;
-    min-height: 250px;
-    transform: translate(-10%, -40%);
-    background: transparent;
-    padding: 0 20px;
+    overflow: hidden;
+    .cont {
+      width: 50%;
+      max-width: 400px;
+      top: 50%;
+      height: 70%;
+      min-height: 250px;
+      transform: translateX(-25%)
+        translateY(${(props) => (props.load ? "-40%" : "100%")});
+      background: transparent;
+      padding: 0 20px;
+    }
     .head-form {
       display: none;
     }

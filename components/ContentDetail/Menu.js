@@ -1,7 +1,20 @@
 import styled from "@emotion/styled";
 import Arrow from "../Logos/Arrow";
+import { useRouter } from "next/router";
 
 export default function Menu({ active, project, onClickHandle, item, index }) {
+  const router = useRouter();
+
+  const linkDetail = (e) => {
+    const link = e.target.dataset.href;
+    router.push(`/modelwork/${link}`);
+  };
+
+  const linkModel = (e) => {
+    const link = e;
+    router.push(`/modelsreview/${link}`);
+  };
+
   return (
     <StyledSecondMenu zIndex={active}>
       <div
@@ -28,20 +41,31 @@ export default function Menu({ active, project, onClickHandle, item, index }) {
               {item.proyectos.map((item, index) => {
                 return (
                   <div className="project-item" key={index}>
-                    <a className="name">{item.titulo}</a>
-                    <a className="btn3d">
-                      <div className="cube">
-                        <figure className="back "></figure>
-                        <figure className="left"></figure>
-                        <figure className="bottom"></figure>
-                        <figure className="front"></figure>
-                        <figure className="right"></figure>
-                        <figure className="top"></figure>
-                      </div>
-                      <div className="view">
-                        <p>view 3D</p>
-                      </div>
+                    <a
+                      data-href={item.titulo}
+                      className="name"
+                      onClick={(e) => linkDetail(e)}
+                    >
+                      {item.titulo}
                     </a>
+                    {item.link_modelo && (
+                      <a
+                        onClick={(e) => linkModel(item.link_modelo)}
+                        className="btn3d"
+                      >
+                        <div className="cube">
+                          <figure className="back "></figure>
+                          <figure className="left"></figure>
+                          <figure className="bottom"></figure>
+                          <figure className="front"></figure>
+                          <figure className="right"></figure>
+                          <figure className="top"></figure>
+                        </div>
+                        <div className="view">
+                          <p>view 3D</p>
+                        </div>
+                      </a>
+                    )}
                   </div>
                 );
               })}
@@ -149,6 +173,12 @@ const StyledSecondMenu = styled.div`
             margin-bottom: 15px;
             border-left: solid 8px #cc6600;
             border-radius: 0 10px 10px 0;
+            .name {
+              cursor: pointer;
+              &:hover {
+                text-decoration: underline;
+              }
+            }
             .btn3d {
               position: relative;
               width: 15px;
