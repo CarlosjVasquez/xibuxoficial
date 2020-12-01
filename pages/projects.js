@@ -29,7 +29,7 @@ export default function Projects({ links, linksSocial, loader, dataProjects }) {
       </Head>
       <Header
         links={links}
-        first={1}
+        first={2}
         onHandleClick={() => setActiveMenu(activeMenu == 1 ? 0 : 1)}
         active={activeMenu}
         load={load}
