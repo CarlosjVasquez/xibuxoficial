@@ -2,12 +2,7 @@ import Content from "./Content";
 import Menu from "./Menu";
 import styled from "@emotion/styled";
 
-export default function ContentDetail({
-  category,
-  active,
-  project,
-  onClickHandle,
-}) {
+export default function ContentDetail({ category, active, project }) {
   return (
     <>
       {category.map((item, index) => {
@@ -16,17 +11,16 @@ export default function ContentDetail({
             <Content
               active={active}
               project={project}
-              onClickHandle={onClickHandle}
               index={index}
               item={item}
             />
-            <Menu
+            {/* <Menu
               active={active}
               project={project}
               onClickHandle={onClickHandle}
               index={index}
               item={item}
-            />
+            /> */}
           </StyledContentDetail>
         );
       })}

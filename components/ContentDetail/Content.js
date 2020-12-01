@@ -1,12 +1,7 @@
 import styled from "@emotion/styled";
+import Link from "next/link";
 
-export default function Content({
-  active,
-  project,
-  onClickHandle,
-  index,
-  item,
-}) {
+export default function Content({ active, project, index, item }) {
   return (
     <StyledContent>
       <div className={index === active ? "content active" : "content inactive"}>
@@ -19,14 +14,20 @@ export default function Content({
         <p className={index === active && !project ? "visible" : "invisible"}>
           {item.descripcion}
         </p>
-        <div
-          onClick={onClickHandle}
-          className={
-            index === active && !project ? "btn visible " : "btn invisible "
-          }
+        <Link
+          href={{
+            pathname: "/work",
+            query: { id: item.titulo },
+          }}
         >
-          <a>projects</a>
-        </div>
+          <div
+            className={
+              index === active && !project ? "btn visible " : "btn invisible "
+            }
+          >
+            <a>projects</a>
+          </div>
+        </Link>
       </div>
     </StyledContent>
   );

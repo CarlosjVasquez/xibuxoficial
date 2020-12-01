@@ -68,6 +68,7 @@ export default function About({ links, linksSocial, infoAbout, loader }) {
         active={activeMenu}
         white={true}
         load={load}
+        scrollActive={true}
       />
       <SocialMedia linksSocial={linksSocial} />
       <StyledBanner ref={banner}>

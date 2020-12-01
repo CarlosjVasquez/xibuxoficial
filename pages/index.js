@@ -3,6 +3,7 @@ import fetch from "isomorphic-unfetch";
 import { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
+import { useRouter } from "next/router";
 
 import Header from "../components/Header/Header";
 import SocialMedia from "../components/SocialMedia";
@@ -20,6 +21,8 @@ export default function Home({ links, linksSocial, category, loader }) {
   const [load, setLoad] = useState(false);
   const container = useRef();
 
+  const router = useRouter();
+
   useEffect(() => {
     if (container.current && !loader) {
       setTimeout(() => {
@@ -29,11 +32,6 @@ export default function Home({ links, linksSocial, category, loader }) {
       setLoad(false);
     }
   });
-
-  const onHandleContent = () => {
-    setProject(!project);
-    setActiveMenu(() => (activeMenu == 1 ? 0 : !project ? 0 : 1));
-  };
 
   return (
     <StyledIndex>
@@ -50,17 +48,11 @@ export default function Home({ links, linksSocial, category, loader }) {
       />
       <SocialMedia linksSocial={linksSocial} />
       <StyledContainer ref={container} load={load}>
-        <SceneOne
-          onLoad={() => console.log("hola")}
-          category={category}
-          active={modelActive}
-          project={project}
-        />
+        <SceneOne category={category} active={modelActive} project={project} />
         <ContentDetail
           category={category}
           active={modelActive}
           project={project}
-          onClickHandle={onHandleContent}
         />
         <Slider
           category={category}

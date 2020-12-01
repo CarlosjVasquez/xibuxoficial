@@ -11,23 +11,32 @@ export default function Header({
   white,
   load,
   project,
+  scrollActive,
+  backActive,
 }) {
   const [mode, setMode] = useState(white);
-  const [back, setBack] = useState(false);
+  const [back, setBack] = useState(
+    backActive === undefined ? false : backActive
+  );
   useEffect(() => {
-    const scroll = () => {
-      if (window.scrollY >= 250) {
-        setMode(false);
-        setBack(true);
-      } else {
-        setMode(true);
-        setBack(false);
-      }
-    };
+    if (scrollActive) {
+      const scroll = () => {
+        if (window.scrollY >= 250) {
+          setMode(false);
+          setBack(true);
+        } else {
+          setMode(true);
+          setBack(false);
+        }
+      };
 
-    window.addEventListener("scroll", scroll);
+      window.addEventListener("scroll", scroll);
+    }
+
     return () => {
-      window.removeEventListener("scroll", scroll);
+      if (scrollActive) {
+        window.removeEventListener("scroll", scroll);
+      }
     };
   });
 
