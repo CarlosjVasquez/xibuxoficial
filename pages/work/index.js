@@ -63,7 +63,7 @@ export default function Projects({ links, linksSocial, loader, dataProjects }) {
                     <Link
                       href={{
                         pathname: "/modelsreview/[id]",
-                        query: { id: item.link_modeloo },
+                        query: { id: item.link_modelo },
                       }}
                     >
                       <a className="linkModel">
