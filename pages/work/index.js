@@ -62,7 +62,7 @@ export default function Projects({ links, linksSocial, loader, dataProjects }) {
                   {item.link_modelo != "" && (
                     <Link
                       href={{
-                        pathname: "/modelsreview/[id]",
+                        pathname: "/modelsreview",
                         query: { id: item.link_modelo },
                       }}
                     >

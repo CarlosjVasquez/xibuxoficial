@@ -1,6 +1,5 @@
 import Head from "next/head";
 import fetch from "isomorphic-unfetch";
-import { useRouter } from "next/router";
 import { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
@@ -8,18 +7,22 @@ import styled from "@emotion/styled";
 import Header from "components/Header/Header";
 import SocialMedia from "components/SocialMedia";
 
-export default function Home({ links, linksSocial, loader }) {
+const Scene1 = dynamic(() => import(`components/ModelsReview/DeptOld`), {
+  ssr: false,
+});
+const Scene2 = dynamic(() => import(`components/ModelsReview/FragOld`), {
+  ssr: false,
+});
+const Scene3 = dynamic(() => import(`components/ModelsReview/WineOld`), {
+  ssr: false,
+});
+
+export default function Home({ links, linksSocial, loader, model }) {
   const [activeMenu, setActiveMenu] = useState(1);
   const [load, setLoad] = useState(false);
+  const [modelo, setModelo] = useState(model);
   const container = useRef();
-  const router = useRouter();
-
-  const Scene = dynamic(
-    () => import(`components/ModelsReview/${router.query.id}`),
-    {
-      ssr: false,
-    }
-  );
+  console.log(model);
 
   useEffect(() => {
     if (container.current && !loader) {
@@ -45,7 +48,15 @@ export default function Home({ links, linksSocial, loader }) {
       />
       <SocialMedia linksSocial={linksSocial} />
       <StyledContainer ref={container} load={load}>
-        <Scene />
+        {modelo == "DeptOld" ? (
+          <Scene1 />
+        ) : modelo == "FragOld" ? (
+          <Scene2 />
+        ) : modelo == "WineOld" ? (
+          <Scene3 />
+        ) : (
+          <h1>error</h1>
+        )}
       </StyledContainer>
     </StyledIndex>
   );
@@ -65,7 +76,7 @@ const StyledIndex = styled.div`
   overflow: hidden;
 `;
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ query }) {
   const { API_URL } = process.env;
 
   const resNav = await fetch(`${API_URL}/menu-links`);
@@ -78,6 +89,7 @@ export async function getServerSideProps() {
     props: {
       links: dataNav,
       linksSocial: dataSocial,
+      model: query.id,
     },
   };
 }
