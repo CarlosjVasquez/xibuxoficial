@@ -86,6 +86,7 @@ export default class wine extends Component {
       "https://res.cloudinary.com/carlosvv18/image/upload/v1606175368/nv9nxaexyubx0dsr6ztz.glb",
       (gltf) => {
         this.model = gltf.scene;
+        this.model.position.y = 2;
         this.scene.add(this.model);
       }
     );
