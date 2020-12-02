@@ -89,21 +89,23 @@ export default class wine extends Component {
         this.scene.add(this.model);
       }
     );
-    // this.gltfloader = new GLTFLoader();
-    // this.gltfloader.load("../gltf/particulas.gltf", (gltf) => {
-    //   this.model = gltf.scene;
-    //   this.model.position.y = -4;
-    //   this.model.position.x = 0;
-    //   this.model.position.z = 0;
-    //   this.model.rotation.y = Math.PI * -0.5;
-    //   this.scene.add(this.model);
+    this.gltfloader = new GLTFLoader();
+    this.gltfloader.load(
+      "https://res.cloudinary.com/carlosvv18/image/upload/v1606879759/mqat78cpn8hh5npy6t0j.glb",
+      (gltf) => {
+        this.model = gltf.scene;
+        this.model.position.y = -4;
+        this.model.position.x = 0;
+        this.model.position.z = 0;
+        this.model.rotation.y = Math.PI * -0.5;
+        this.scene.add(this.model);
 
-    //   this.clip = gltf.animations[0];
-    //   this.mixer = new THREE.AnimationMixer(this.model);
-    //   this.mixer.clipAction(this.clip.optimize()).play();
-    //   this.mixers.push(this.mixer);
-
-    // });
+        this.clip = gltf.animations[0];
+        this.mixer = new THREE.AnimationMixer(this.model);
+        this.mixer.clipAction(this.clip.optimize()).play();
+        this.mixers.push(this.mixer);
+      }
+    );
     //add lights
     this.lightAmbient = new THREE.AmbientLight({ color: 0xffffff }, 0.4);
     this.lightDirectional = new THREE.DirectionalLight(
