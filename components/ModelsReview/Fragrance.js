@@ -2,11 +2,12 @@ import { Component } from "react";
 import styled from "@emotion/styled";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { Water } from "three/examples/jsm/objects/Water";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
 
-export default class wine extends Component {
+export default class Fragrance extends Component {
   componentDidMount() {
     this.mouseX = 0;
     this.mouseY = 0;
@@ -32,7 +33,7 @@ export default class wine extends Component {
     //add videotexture
     var vid = document.createElement("video");
     vid.src =
-      "https://res.cloudinary.com/carlosvv18/video/upload/v1606165168/sybe14znrktc7efdarxt.mp4";
+      "https://res.cloudinary.com/carlosvv18/video/upload/v1606189264/nui4ncdmpbbkwaioqvoi.mp4";
     vid.crossOrigin = "Anonymous";
     vid.loop = true;
     vid.muted = true;
@@ -51,13 +52,31 @@ export default class wine extends Component {
     this.plane = new THREE.Mesh(this.planeGeometry, this.planeMaterial);
     this.scene.add(this.plane);
 
+    //add hdr texture
+    this.sphereGeometry = new THREE.SphereBufferGeometry(100, 100, 60);
+    this.sphereGeometry.scale(-1, 1, 1);
+    this.sphereTexture = new THREE.TextureLoader().load(
+      "https://res.cloudinary.com/carlosvv18/image/upload/v1606875679/w80b873x9lw25ydaurhl.jpg",
+      () => {
+        this.addHdr = true;
+      }
+    );
+    this.sphereMaterial = new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      map: this.sphereTexture,
+    });
+    this.sphere = new THREE.Mesh(this.sphereGeometry, this.sphereMaterial);
+    this.sphere.position.y = -3;
+    this.sphere.rotation.y = Math.PI * -0.12;
+    this.scene.add(this.sphere);
+
     //add renderer
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setClearColor("#000000");
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 0.4;
+    this.renderer.toneMappingExposure = 0.5;
     this.renderer.outputEncoding = THREE.sRGBEncoding;
 
     //get viewport
@@ -73,39 +92,108 @@ export default class wine extends Component {
       0.85
     );
     this.bloomPass.threshold = 0;
-    this.bloomPass.strength = 0.2;
-    this.bloomPass.radius = 2;
+    this.bloomPass.strength = 0.4;
+    this.bloomPass.radius = 1;
 
     this.composer = new EffectComposer(this.renderer);
     this.composer.addPass(this.renderPost);
     this.composer.addPass(this.bloomPass);
 
+    //add water
+    this.waterGeometry = new THREE.PlaneBufferGeometry(1000, 1000);
+    this.water = new Water(this.waterGeometry, {
+      textureWidth: 512,
+      textureHeight: 512,
+      waterNormals: new THREE.TextureLoader().load(
+        "https://res.cloudinary.com/carlosvv18/image/upload/v1606190145/hwbszds2kbsj3siqp1wd.jpg",
+        (texture) => {
+          texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+        }
+      ),
+      alpha: 1.0,
+      waterColor: 0x003e3f,
+      distortionScale: 4.7,
+      fog: this.scene.fog !== undefined,
+    });
+    this.water.position.y = -2.8;
+    this.water.rotation.x = Math.PI * -0.5;
+    this.scene.add(this.water);
+
     //add GLTF
     this.gltfloader = new GLTFLoader();
     this.gltfloader.load(
-      "https://res.cloudinary.com/carlosvv18/image/upload/v1606175368/nv9nxaexyubx0dsr6ztz.glb",
+      "https://res.cloudinary.com/carlosvv18/image/upload/v1606190545/blp7wsrtsixfyvvv7n82.glb",
       (gltf) => {
         this.model = gltf.scene;
+        this.model.position.y = -3;
+        this.model.position.x = -11;
+        this.model.position.z = -3;
+        this.model.rotation.y = Math.PI * -0.3;
         this.scene.add(this.model);
+
+        this.clip = gltf.animations[0];
+        this.mixer = new THREE.AnimationMixer(this.model);
+        this.mixer.timeScale = 0.3;
+        this.mixer.clipAction(this.clip.optimize()).play();
+        this.mixers.push(this.mixer);
       }
     );
-    // this.gltfloader = new GLTFLoader();
-    // this.gltfloader.load("../gltf/particulas.gltf", (gltf) => {
-    //   this.model = gltf.scene;
-    //   this.model.position.y = -4;
-    //   this.model.position.x = 0;
-    //   this.model.position.z = 0;
-    //   this.model.rotation.y = Math.PI * -0.5;
-    //   this.scene.add(this.model);
+    this.gltfloader = new GLTFLoader();
+    this.gltfloader.load(
+      "https://res.cloudinary.com/carlosvv18/image/upload/v1606190544/zizfctna482gfhi03dtz.glb",
+      (gltf) => {
+        this.model = gltf.scene;
+        this.model.position.y = -3.5;
+        this.model.position.x = -40;
+        this.model.position.z = -70;
+        this.model.rotation.y = Math.PI * -0.7;
+        this.scene.add(this.model);
 
-    //   this.clip = gltf.animations[0];
-    //   this.mixer = new THREE.AnimationMixer(this.model);
-    //   this.mixer.clipAction(this.clip.optimize()).play();
-    //   this.mixers.push(this.mixer);
+        this.clip = gltf.animations[0];
+        this.mixer = new THREE.AnimationMixer(this.model);
+        this.mixer.timeScale = 0.3;
+        this.mixer.clipAction(this.clip.optimize()).play();
+        this.mixers.push(this.mixer);
+      }
+    );
+    this.gltfloader = new GLTFLoader();
+    this.gltfloader.load(
+      "https://res.cloudinary.com/carlosvv18/image/upload/v1606190545/wc3yhvvp7ixryjtnyhee.glb",
+      (gltf) => {
+        this.model = gltf.scene;
+        this.model.position.y = -3.5;
+        this.model.position.x = 11;
+        this.model.position.z = 6;
+        this.scene.add(this.model);
 
-    // });
+        this.clip = gltf.animations[0];
+        this.mixer = new THREE.AnimationMixer(this.model);
+        this.mixer.clipAction(this.clip.optimize()).play();
+        this.mixers.push(this.mixer);
+      }
+    );
+    this.gltfloader = new GLTFLoader();
+    this.gltfloader.load(
+      "https://res.cloudinary.com/carlosvv18/image/upload/v1606190545/dza3uyglrx3mq2pk3tad.glb",
+      (gltf) => {
+        this.model = gltf.scene;
+        this.model.scale.x = 1 / 3;
+        this.model.scale.y = 1 / 3;
+        this.model.scale.z = 1 / 3;
+        this.model.position.y = -3;
+        this.model.position.x = 30;
+        this.model.position.z = -50;
+        this.scene.add(this.model);
+
+        this.clip = gltf.animations[0];
+        this.mixer = new THREE.AnimationMixer(this.model);
+        this.mixer.clipAction(this.clip.optimize()).play();
+        this.mixers.push(this.mixer);
+      }
+    );
+
     //add lights
-    this.lightAmbient = new THREE.AmbientLight({ color: 0xffffff }, 0.4);
+    this.lightAmbient = new THREE.AmbientLight({ color: 0xffffff }, 0.2);
     this.lightDirectional = new THREE.DirectionalLight(
       { color: 0xffffff },
       0.2
@@ -141,7 +229,6 @@ export default class wine extends Component {
     this.mouseY = (e.clientY - this.windowHalfY) * 0.004;
   };
   onWindowResize = (e) => {
-    e.stopPropagation();
     this.windowHalfX = window.innerWidth / 2;
     this.windowHalfY = window.innerHeight / 2;
 
@@ -154,6 +241,7 @@ export default class wine extends Component {
   animate = () => {
     this.frameId = window.requestAnimationFrame(this.animate);
     this.renderScene();
+
     const delta = this.clock.getDelta();
     for (let i = 0; i < this.mixers.length; i++) {
       this.mixers[i].update(delta);
@@ -166,6 +254,8 @@ export default class wine extends Component {
     this.camera.lookAt(this.scene.position);
     this.composer.render(this.scene, this.camera);
 
+    this.water.material.uniforms["time"].value += 0.05 / 60.0;
+
     if (this.video) {
       if (this.video.paused) return;
       if (this.video.readyState === this.video.HAVE_ENOUGH_DATA) {
@@ -176,16 +266,19 @@ export default class wine extends Component {
 
   render() {
     return (
-      <WineWrapper>
+      <FragranceWrapper>
         <div id="WebGL" className="WebGL"></div>
-      </WineWrapper>
+      </FragranceWrapper>
     );
   }
 }
 
-const WineWrapper = styled.div`
+const FragranceWrapper = styled.div`
   width: 100%;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   .WebGL {
     width: 100%;
     height: 100%;

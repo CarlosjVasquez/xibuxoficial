@@ -2,11 +2,11 @@ import { Component } from "react";
 import styled from "@emotion/styled";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
-import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
 
-export default class wine extends Component {
+export default class Department extends Component {
   componentDidMount() {
     this.mouseX = 0;
     this.mouseY = 0;
@@ -18,21 +18,21 @@ export default class wine extends Component {
 
     //add animation
     this.clock = new THREE.Clock();
-    this.mixers = [];
 
     //add camera
     this.camera = new THREE.PerspectiveCamera(
-      34,
+      44,
       window.innerWidth / window.innerHeight,
       1,
       500
     );
-    this.camera.position.z = 25;
+    this.camera.position.z = 23;
+    this.scene.add(this.camera);
 
     //add videotexture
     var vid = document.createElement("video");
     vid.src =
-      "https://res.cloudinary.com/carlosvv18/video/upload/v1606165168/sybe14znrktc7efdarxt.mp4";
+      "https://res.cloudinary.com/carlosvv18/video/upload/v1606189264/nui4ncdmpbbkwaioqvoi.mp4";
     vid.crossOrigin = "Anonymous";
     vid.loop = true;
     vid.muted = true;
@@ -43,7 +43,7 @@ export default class wine extends Component {
     this.videoTexture.generateMipmaps = false;
 
     //add video geometry
-    this.planeGeometry = new THREE.PlaneBufferGeometry(10, 5.6);
+    this.planeGeometry = new THREE.PlaneBufferGeometry(10.71, 6);
     this.planeMaterial = new THREE.MeshBasicMaterial({
       color: 0x898989,
       map: this.videoTexture,
@@ -57,7 +57,7 @@ export default class wine extends Component {
     this.renderer.setClearColor("#000000");
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 0.4;
+    this.renderer.toneMappingExposure = 0.8;
     this.renderer.outputEncoding = THREE.sRGBEncoding;
 
     //get viewport
@@ -66,52 +66,45 @@ export default class wine extends Component {
 
     //add postprocess
     this.renderPost = new RenderPass(this.scene, this.camera);
-    this.bloomPass = new UnrealBloomPass(
-      new THREE.Vector2(window.innerWidth, window.innerHeight),
-      1.5,
-      0.4,
-      0.85
-    );
-    this.bloomPass.threshold = 0;
-    this.bloomPass.strength = 0.2;
-    this.bloomPass.radius = 2;
-
     this.composer = new EffectComposer(this.renderer);
     this.composer.addPass(this.renderPost);
-    this.composer.addPass(this.bloomPass);
 
     //add GLTF
     this.gltfloader = new GLTFLoader();
     this.gltfloader.load(
-      "https://res.cloudinary.com/carlosvv18/image/upload/v1606175368/nv9nxaexyubx0dsr6ztz.glb",
+      "https://res.cloudinary.com/carlosvv18/image/upload/v1606188629/q3xx9pjhfksdrxotrq7v.glb",
       (gltf) => {
         this.model = gltf.scene;
+        this.model.scale.x = 1 / 20;
+        this.model.scale.y = 1 / 20;
+        this.model.scale.z = 1 / 20;
+        this.model.rotation.y = Math.PI * 0.5;
+        this.model.position.x = 4.31;
+        this.model.position.y = -7.85;
+        this.model.position.z = -6.4;
+
         this.scene.add(this.model);
       }
     );
-    // this.gltfloader = new GLTFLoader();
-    // this.gltfloader.load("../gltf/particulas.gltf", (gltf) => {
-    //   this.model = gltf.scene;
-    //   this.model.position.y = -4;
-    //   this.model.position.x = 0;
-    //   this.model.position.z = 0;
-    //   this.model.rotation.y = Math.PI * -0.5;
-    //   this.scene.add(this.model);
+    //add HDRI
+    new RGBELoader()
+      .setDataType(THREE.UnsignedByteType)
+      .load(
+        "https://res.cloudinary.com/carlosvv18/raw/upload/v1606188430/upgsgy680qhacxjwnggg.hdr",
+        (texture) => {
+          this.envMap = this.pmremGenerator.fromEquirectangular(
+            texture
+          ).texture;
+          this.scene.background = this.envMap;
+          this.scene.environment = this.envMap;
+          texture.dispose();
+          this.pmremGenerator.dispose();
+        }
+      );
 
-    //   this.clip = gltf.animations[0];
-    //   this.mixer = new THREE.AnimationMixer(this.model);
-    //   this.mixer.clipAction(this.clip.optimize()).play();
-    //   this.mixers.push(this.mixer);
-
-    // });
-    //add lights
-    this.lightAmbient = new THREE.AmbientLight({ color: 0xffffff }, 0.4);
-    this.lightDirectional = new THREE.DirectionalLight(
-      { color: 0xffffff },
-      0.2
-    );
-    this.scene.add(this.lightAmbient);
-    this.scene.add(this.lightDirectional);
+    this.pmremGenerator = new THREE.PMREMGenerator(this.renderer);
+    this.pmremGenerator.compileEquirectangularShader();
+    this.scene.rotation.y = Math.PI * -0.7;
 
     this.renderer.autoClear = false;
 
@@ -141,7 +134,6 @@ export default class wine extends Component {
     this.mouseY = (e.clientY - this.windowHalfY) * 0.004;
   };
   onWindowResize = (e) => {
-    e.stopPropagation();
     this.windowHalfX = window.innerWidth / 2;
     this.windowHalfY = window.innerHeight / 2;
 
@@ -154,10 +146,6 @@ export default class wine extends Component {
   animate = () => {
     this.frameId = window.requestAnimationFrame(this.animate);
     this.renderScene();
-    const delta = this.clock.getDelta();
-    for (let i = 0; i < this.mixers.length; i++) {
-      this.mixers[i].update(delta);
-    }
   };
   renderScene = () => {
     this.camera.position.x += (this.mouseX - this.camera.position.x) * 0.09;
@@ -176,16 +164,16 @@ export default class wine extends Component {
 
   render() {
     return (
-      <WineWrapper>
+      <DepartmentWrapper>
         <div id="WebGL" className="WebGL"></div>
-      </WineWrapper>
+      </DepartmentWrapper>
     );
   }
 }
 
-const WineWrapper = styled.div`
-  width: 100%;
+const DepartmentWrapper = styled.div`
   position: relative;
+  width: 100%;
   .WebGL {
     width: 100%;
     height: 100%;

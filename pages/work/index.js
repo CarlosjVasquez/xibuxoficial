@@ -60,12 +60,7 @@ export default function Projects({ links, linksSocial, loader, dataProjects }) {
                     </a>
                   </Link>
                   {item.link_modelo != "" && (
-                    <Link
-                      href={{
-                        pathname: "/modelsreview",
-                        query: { id: item.link_modelo },
-                      }}
-                    >
+                    <Link href={`/modelsreview/${item.link_modelo}`}>
                       <a className="linkModel">
                         <div className="btn3d">
                           <div className="cube">

@@ -185,6 +185,8 @@ export default function WineReviews() {
       document.removeEventListener("mousemove", onDocumentMouseMove, false);
 
       stop();
+      scene.dispose();
+      viewport.removeChild(renderer.domElement);
     };
   });
 
