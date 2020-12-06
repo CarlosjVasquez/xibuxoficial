@@ -33,12 +33,14 @@ export default function Home({ links, linksSocial, loader, model }) {
       </Head>
       <Header
         links={links}
-        first={1}
+        first={0}
         onHandleClick={() => setActiveMenu(activeMenu == 1 ? 0 : 1)}
         active={activeMenu}
+        white={true}
         load={load}
+        scrollActive={false}
       />
-      <SocialMedia linksSocial={linksSocial} />
+      <SocialMedia linksSocial={linksSocial} color="#fff" />
       <StyledContainer ref={container} load={load}>
         <Scene2 />
       </StyledContainer>

@@ -193,7 +193,7 @@ export default class Fragrance extends Component {
     );
 
     //add lights
-    this.lightAmbient = new THREE.AmbientLight({ color: 0xffffff }, 0.2);
+    this.lightAmbient = new THREE.AmbientLight({ color: 0xffffff }, 0.3);
     this.lightDirectional = new THREE.DirectionalLight(
       { color: 0xffffff },
       0.2

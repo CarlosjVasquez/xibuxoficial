@@ -11,7 +11,7 @@ const Scene3 = dynamic(() => import(`components/ModelsReview/Wine`), {
   ssr: false,
 });
 
-export default function Home({ links, linksSocial, loader, model }) {
+export default function Home({ links, linksSocial, loader }) {
   const [activeMenu, setActiveMenu] = useState(1);
   const [load, setLoad] = useState(false);
   const container = useRef();
@@ -33,12 +33,14 @@ export default function Home({ links, linksSocial, loader, model }) {
       </Head>
       <Header
         links={links}
-        first={1}
+        first={0}
         onHandleClick={() => setActiveMenu(activeMenu == 1 ? 0 : 1)}
         active={activeMenu}
+        white={true}
         load={load}
+        scrollActive={false}
       />
-      <SocialMedia linksSocial={linksSocial} />
+      <SocialMedia linksSocial={linksSocial} color={"#fff"} />
       <StyledContainer ref={container} load={load}>
         <Scene3 />
       </StyledContainer>

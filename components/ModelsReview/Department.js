@@ -32,7 +32,7 @@ export default class Department extends Component {
     //add videotexture
     var vid = document.createElement("video");
     vid.src =
-      "https://res.cloudinary.com/carlosvv18/video/upload/v1606189264/nui4ncdmpbbkwaioqvoi.mp4";
+      "https://res.cloudinary.com/carlosvv18/video/upload/v1606188743/tbn6dodx3dhglhvihrwy.mp4";
     vid.crossOrigin = "Anonymous";
     vid.loop = true;
     vid.muted = true;

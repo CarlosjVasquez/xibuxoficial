@@ -101,8 +101,8 @@ const StyledContainer = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: url("https://res.cloudinary.com/carlosvv18/image/upload/v1606778391/omsehxeqyavoeivrmrbe.png");
-    background-size: 80px 80px;
+    background: url("https://res.cloudinary.com/carlosvv18/image/upload/v1606948632/p63bs85braqp72ze7eub.png");
+    background-size: 200px 200px;
   }
 `;
 

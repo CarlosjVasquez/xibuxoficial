@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LinkSocial from "./LinkSocial";
 
-export default function SocialMedia({ linksSocial }) {
+export default function SocialMedia({ linksSocial, color }) {
   const [socialActive, setSocialActive] = useState(0);
 
   const onClickHandle = () => {
@@ -11,7 +11,7 @@ export default function SocialMedia({ linksSocial }) {
   };
 
   return (
-    <StyledSocialMedia>
+    <StyledSocialMedia color={color !== "" ? color : "#021154"}>
       <LinkSocial linksSocial={linksSocial} socialActive={socialActive} />
       <FontAwesomeIcon
         onClick={onClickHandle}
@@ -34,7 +34,7 @@ const StyledSocialMedia = styled.div`
   z-index: 5;
   .icon-plus,
   .icon {
-    color: #021154;
+    color: ${(props) => (props.color ? "#fff" : "#021154")};
     font-size: 1.5rem;
     margin-top: 20px;
   }

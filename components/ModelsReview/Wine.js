@@ -108,11 +108,14 @@ export default class wine extends Component {
       }
     );
     //add lights
-    this.lightAmbient = new THREE.AmbientLight({ color: 0xffffff }, 0.4);
+    this.lightAmbient = new THREE.AmbientLight({ color: 0xffffff }, 0.6);
     this.lightDirectional = new THREE.DirectionalLight(
       { color: 0xffffff },
-      0.2
+      0.3
     );
+    this.lightDirectional.position.y = -5;
+    this.lightDirectional.position.x = -5;
+    this.lightDirectional.position.z = 10;
     this.scene.add(this.lightAmbient);
     this.scene.add(this.lightDirectional);
 

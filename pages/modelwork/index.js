@@ -20,7 +20,6 @@ export default function PagesWorks({
     if (container.current && !loader) {
       setTimeout(() => {
         setLoad(true);
-        console.log(dataProject);
       }, 500);
     } else if (loader) {
       setLoad(false);
@@ -140,7 +139,10 @@ const StyledContact = styled.div`
     }
   }
   @media only screen and (min-width: 1000px) {
-    padding: 60px 30px;
+    .cont {
+      padding: 60px 30px;
+    }
+
     .description {
       font-size: 2.5rem;
       max-width: 1280px;
@@ -233,8 +235,8 @@ const StyledContainer = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: url("https://res.cloudinary.com/carlosvv18/image/upload/v1606778391/omsehxeqyavoeivrmrbe.png");
-    background-size: 80px 80px;
+    background: url("https://res.cloudinary.com/carlosvv18/image/upload/v1606948632/p63bs85braqp72ze7eub.png");
+    background-size: 200px 200px;
   }
 `;
 
