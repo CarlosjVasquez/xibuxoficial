@@ -31,7 +31,7 @@ export default function Projects({ links, linksSocial, loader, dataProjects }) {
       </Head>
       <Header
         links={links}
-        first={router.query.id === 'Brand' ? 3 : 1}
+        first={router.query.id === 'Brands' ? 3 : 1}
         onHandleClick={() => setActiveMenu(activeMenu === 1 ? 0 : 1)}
         active={activeMenu}
         load={load}
@@ -42,7 +42,6 @@ export default function Projects({ links, linksSocial, loader, dataProjects }) {
         <StyledProject>
           {dataProjects.map((item, key) => {
             if (item.categoria.titulo === router.query.id) {
-              console.log(item.link_modelo)
               return (
                 <StyledItem key={key}>
                   <Link

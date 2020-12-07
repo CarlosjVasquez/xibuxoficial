@@ -33,7 +33,7 @@ export default function Home({ links, linksSocial, loader, model }) {
       </Head>
       <Header
         links={links}
-        first={0}
+        first={1}
         onHandleClick={() => setActiveMenu(activeMenu === 1 ? 0 : 1)}
         active={activeMenu}
         white={true}

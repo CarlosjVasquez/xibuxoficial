@@ -2,6 +2,8 @@ import styled from '@emotion/styled'
 import Head from 'next/head'
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import Header from 'components/Header/Header'
 import SocialMedia from 'components/SocialMedia'
@@ -15,6 +17,7 @@ export default function PagesWorks({
   const [activeMenu, setActiveMenu] = useState(1)
   const [load, setLoad] = useState(false)
   const container = useRef()
+  const router = useRouter()
 
   useEffect(() => {
     if (container.current && !loader) {
@@ -43,6 +46,12 @@ export default function PagesWorks({
       {dataProject && (
         <>
           <StyledContainer ref={container}>
+            <StyleBack onClick={() => router.back()}>
+              <div className="btn">
+                <FontAwesomeIcon icon={['fas', 'long-arrow-alt-left']} />
+                <a>Back</a>
+              </div>
+            </StyleBack>
             <StyledBanner>
               <iframe
                 id="video"
@@ -52,13 +61,18 @@ export default function PagesWorks({
                 allowFullScreen
               ></iframe>
             </StyledBanner>
-            <StyledMain>
-              <h1>{dataProject.titulo}</h1>
-              <p>{dataProject.short_description}</p>
-            </StyledMain>
-            <StyledGallery>
-              {dataProject.gallery &&
-                dataProject.gallery.map((item, key) => {
+            {dataProject.titulo !== null && (
+              <StyledMain>
+                <h1>{dataProject.titulo}</h1>
+                {dataProject.short_description !== null && (
+                  <p>{dataProject.short_description}</p>
+                )}
+              </StyledMain>
+            )}
+
+            {dataProject.gallery !== null && (
+              <StyledGallery>
+                {dataProject.gallery.map((item, key) => {
                   return (
                     <StyledItem key={key}>
                       <div className="img-back">
@@ -67,7 +81,15 @@ export default function PagesWorks({
                     </StyledItem>
                   )
                 })}
-            </StyledGallery>
+              </StyledGallery>
+            )}
+            {dataProject.link_modelo !== null && (
+              <StyledBtnModel>
+                <Link href={`/modelsreview/${dataProject.link_modelo}`}>
+                  <a>View Model 3D</a>
+                </Link>
+              </StyledBtnModel>
+            )}
           </StyledContainer>
           <StyledContact>
             <div className="cont">
@@ -94,6 +116,49 @@ export default function PagesWorks({
     </>
   )
 }
+
+const StyledBtnModel = styled.a`
+  position: relative;
+  height: 80px;
+  width: 100%;
+  margin-top: 80px;
+  a {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 15px 25px;
+    border-radius: 5px;
+    background: #2e3547;
+    color: #fff;
+    font-size: 1.5rem;
+    font-family: Raleway;
+    font-weight: 400;
+  }
+`
+
+const StyleBack = styled.div`
+  position: relative;
+  height: 40px;
+  width: 100%;
+  max-width: 1280px;
+  margin-bottom: 20px;
+  .btn {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-50%);
+    cursor: pointer;
+    a {
+      margin-left: 5px;
+    }
+  }
+`
 
 const StyledContact = styled.div`
   position: relative;
