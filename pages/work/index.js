@@ -126,6 +126,7 @@ const StyledItem = styled.div`
   align-items: center;
   overflow: hidden;
   box-shadow: 0px 0px 2px 0px #00000055;
+  margin-bottom: 10px;
   &:before {
     content: '';
     display: block;

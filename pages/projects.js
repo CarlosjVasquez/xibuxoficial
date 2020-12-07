@@ -56,7 +56,7 @@ export default function Projects({ links, linksSocial, loader, dataProjects }) {
                     </div>
                   </a>
                 </Link>
-                {item.link_modelo !== '' && (
+                {item.link_modelo !== null && (
                   <Link href={`/modelsreview/${item.link_modelo}`}>
                     <a className="linkModel">
                       <div className="btn3d">
