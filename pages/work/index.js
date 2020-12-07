@@ -144,8 +144,7 @@ const StyledItem = styled.div`
     justify-content: center;
     align-items: center;
     img {
-      width: auto;
-      height: 100%;
+      min-height: 100%;
     }
   }
   .des-item {

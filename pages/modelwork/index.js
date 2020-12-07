@@ -46,7 +46,7 @@ export default function PagesWorks({
             <StyledBanner>
               <iframe
                 id="video"
-                src={dataProject.youtube_video}
+                src={`https://www.youtube.com/embed/${dataProject.youtube_video}`}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
