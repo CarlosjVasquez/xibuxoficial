@@ -1,28 +1,28 @@
-import Head from "next/head";
-import fetch from "isomorphic-unfetch";
-import { useState, useRef, useEffect } from "react";
-import styled from "@emotion/styled";
-import { useRouter } from "next/router";
-import Link from "next/link";
+import Head from 'next/head'
+import fetch from 'isomorphic-unfetch'
+import { useState, useRef, useEffect } from 'react'
+import styled from '@emotion/styled'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 
-import Header from "components/Header/Header";
-import SocialMedia from "components/SocialMedia";
+import Header from 'components/Header/Header'
+import SocialMedia from 'components/SocialMedia'
 
 export default function Projects({ links, linksSocial, loader, dataProjects }) {
-  const [activeMenu, setActiveMenu] = useState(1);
-  const [load, setLoad] = useState(false);
-  const container = useRef();
-  const router = useRouter();
+  const [activeMenu, setActiveMenu] = useState(1)
+  const [load, setLoad] = useState(false)
+  const container = useRef()
+  const router = useRouter()
 
   useEffect(() => {
     if (container.current && !loader) {
       setTimeout(() => {
-        setLoad(true);
-      }, 500);
+        setLoad(true)
+      }, 500)
     } else if (loader) {
-      setLoad(false);
+      setLoad(false)
     }
-  });
+  })
 
   return (
     <>
@@ -31,8 +31,8 @@ export default function Projects({ links, linksSocial, loader, dataProjects }) {
       </Head>
       <Header
         links={links}
-        first={1}
-        onHandleClick={() => setActiveMenu(activeMenu == 1 ? 0 : 1)}
+        first={router.query.id === 'Brand' ? 3 : 1}
+        onHandleClick={() => setActiveMenu(activeMenu === 1 ? 0 : 1)}
         active={activeMenu}
         load={load}
         backActive={true}
@@ -42,11 +42,12 @@ export default function Projects({ links, linksSocial, loader, dataProjects }) {
         <StyledProject>
           {dataProjects.map((item, key) => {
             if (item.categoria.titulo === router.query.id) {
+              console.log(item.link_modelo)
               return (
                 <StyledItem key={key}>
                   <Link
                     href={{
-                      pathname: "/modelwork",
+                      pathname: '/modelwork',
                       query: { id: item.titulo, cd: item.id },
                     }}
                   >
@@ -59,7 +60,8 @@ export default function Projects({ links, linksSocial, loader, dataProjects }) {
                       </div>
                     </a>
                   </Link>
-                  {item.link_modelo != "" && (
+
+                  {item.link_modelo !== null && (
                     <Link href={`/modelsreview/${item.link_modelo}`}>
                       <a className="linkModel">
                         <div className="btn3d">
@@ -79,13 +81,13 @@ export default function Projects({ links, linksSocial, loader, dataProjects }) {
                     </Link>
                   )}
                 </StyledItem>
-              );
+              )
             }
           })}
         </StyledProject>
       </StyledContainer>
     </>
-  );
+  )
 }
 
 const StyledContainer = styled.div`
@@ -95,16 +97,16 @@ const StyledContainer = styled.div`
   align-items: center;
   background: #fff;
   &::before {
-    content: "";
+    content: '';
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url("https://res.cloudinary.com/carlosvv18/image/upload/v1606948632/p63bs85braqp72ze7eub.png");
+    background: url('https://res.cloudinary.com/carlosvv18/image/upload/v1606948632/p63bs85braqp72ze7eub.png');
     background-size: 200px 200px;
   }
-`;
+`
 
 const StyledProject = styled.div`
   display: flex;
@@ -114,7 +116,7 @@ const StyledProject = styled.div`
   max-width: 1280px;
   width: 100%;
   padding: 100px 50px;
-`;
+`
 
 const StyledItem = styled.div`
   position: relative;
@@ -125,7 +127,7 @@ const StyledItem = styled.div`
   overflow: hidden;
   box-shadow: 0px 0px 2px 0px #00000055;
   &:before {
-    content: "";
+    content: '';
     display: block;
     width: 100%;
     padding-top: 56.25%;
@@ -138,8 +140,12 @@ const StyledItem = styled.div`
     width: 100%;
     height: 100%;
     transition: all 1s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     img {
-      min-height: 100%;
+      width: auto;
+      height: 100%;
     }
   }
   .des-item {
@@ -252,23 +258,23 @@ const StyledItem = styled.div`
       transform: translateX(-50%) scaleY(1);
     }
   }
-`;
+`
 
 export async function getServerSideProps() {
-  const { API_URL } = process.env;
+  const { API_URL } = process.env
 
-  const resNav = await fetch(`${API_URL}/menu-links`);
-  const resSocial = await fetch(`${API_URL}/social-medias`);
-  const resProjects = await fetch(`${API_URL}/proyectos`);
+  const resNav = await fetch(`${API_URL}/menu-links`)
+  const resSocial = await fetch(`${API_URL}/social-medias`)
+  const resProjects = await fetch(`${API_URL}/proyectos`)
 
-  const dataNav = await resNav.json();
-  const dataSocial = await resSocial.json();
-  const dataProjects = await resProjects.json();
+  const dataNav = await resNav.json()
+  const dataSocial = await resSocial.json()
+  const dataProjects = await resProjects.json()
   return {
     props: {
       links: dataNav,
       linksSocial: dataSocial,
       dataProjects: dataProjects,
     },
-  };
+  }
 }

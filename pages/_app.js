@@ -1,50 +1,49 @@
-import { ThemeProvider } from "emotion-theming";
-import GlobalStyles from "components/GlobalStyles/GlobalStyles";
-import { useState, useEffect } from "react";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fab } from "@fortawesome/free-brands-svg-icons";
-import { fas } from "@fortawesome/free-solid-svg-icons";
-import Loader from "react-loader-spinner";
-import styled from "@emotion/styled";
+import { ThemeProvider } from 'emotion-theming'
+import GlobalStyles from 'components/GlobalStyles/GlobalStyles'
+import { useState, useEffect } from 'react'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import Loader from 'react-loader-spinner'
+import styled from '@emotion/styled'
 
-import { useRouter } from "next/router";
-import NProgress from "nprogress";
-import "nprogress/nprogress.css";
+import { useRouter } from 'next/router'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
-library.add(fab, fas);
+library.add(fab, fas)
 
 const theme = {
   colors: {
-    primary: "#ff0000",
+    primary: '#ff0000',
   },
-};
+}
 
 export default function MyApp({ Component, pageProps }) {
-  const [loader, setLoader] = useState(false);
-  const router = useRouter();
-  const [ready, setReady] = useState(false);
+  const [loader, setLoader] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
-    router.events.on("routeChangeStart", () => start());
-    router.events.on("routeChangeComplete", () => done());
-    router.events.on("routeChangeError", () => done());
+    router.events.on('routeChangeStart', () => start())
+    router.events.on('routeChangeComplete', () => done())
+    router.events.on('routeChangeError', () => done())
 
     return () => {
-      router.events.off("routeChangeStart", () => start());
-      router.events.off("routeChangeComplete", () => done());
-      router.events.off("routeChangeError", () => done());
-    };
-  });
+      router.events.off('routeChangeStart', () => start())
+      router.events.off('routeChangeComplete', () => done())
+      router.events.off('routeChangeError', () => done())
+    }
+  })
 
   const start = () => {
-    NProgress.start();
-    setLoader(true);
-  };
+    NProgress.start()
+    setLoader(true)
+  }
 
   const done = () => {
-    NProgress.done();
-    setLoader(false);
-  };
+    NProgress.done()
+    setLoader(false)
+  }
 
   return (
     <>
@@ -56,7 +55,7 @@ export default function MyApp({ Component, pageProps }) {
         </StyledLoader>
       </ThemeProvider>
     </>
-  );
+  )
 }
 
 const StyledLoader = styled.div`
@@ -69,4 +68,4 @@ const StyledLoader = styled.div`
   align-items: center;
   justify-content: center;
   z-index: -1;
-`;
+`

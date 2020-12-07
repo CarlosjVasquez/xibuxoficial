@@ -1,17 +1,17 @@
-import { useLoader } from "react-three-fiber";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { useRef, useEffect } from "react";
-import { useSpring, a } from "react-spring/three";
+import { useLoader } from 'react-three-fiber'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { useRef } from 'react'
+import { useSpring, a } from 'react-spring/three'
 
 export default function Model({ category, animated, project }) {
-  const loader = useLoader(GLTFLoader, `${category.modelo[0].url}`);
-  const object = loader.scene;
-  const ref = useRef();
+  const loader = useLoader(GLTFLoader, `${category.modelo[0].url}`)
+  const object = loader.scene
+  const ref = useRef()
   const props = useSpring({
     scale: animated ? 0 : 1,
     rotation: animated ? 6.6 : 0.3,
     scalemodel: project ? [1.1, 1.1, 1.1] : [1, 1, 1],
-  });
+  })
 
   return (
     <group>
@@ -37,5 +37,5 @@ export default function Model({ category, animated, project }) {
         />
       </a.mesh>
     </group>
-  );
+  )
 }

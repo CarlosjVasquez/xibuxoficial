@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styled from "@emotion/styled";
+import { useEffect } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import styled from '@emotion/styled'
 
 export default function Input({
   id,
@@ -13,37 +13,37 @@ export default function Input({
   rows,
 }) {
   useEffect(() => {
-    const input = document.getElementById(id);
+    const input = document.getElementById(id)
 
     const changeValue = (e) => {
-      onChange && onChange(e.target.value);
-    };
+      onChange && onChange(e.target.value)
+    }
     const onFocus = (e) => {
-      e.target.parentNode.style.boxShadow = "0px 0px 3px 1px #005c81bb";
-      onInput(true);
-    };
+      e.target.parentNode.style.boxShadow = '0px 0px 3px 1px #005c81bb'
+      onInput(true)
+    }
     const onBlur = (e) => {
-      e.target.parentNode.style.boxShadow = "0px 0px 3px 1px #005c8155";
-      onInput(false);
-    };
+      e.target.parentNode.style.boxShadow = '0px 0px 3px 1px #005c8155'
+      onInput(false)
+    }
 
-    input.addEventListener("input", changeValue);
-    input.addEventListener("focus", onFocus);
-    input.addEventListener("blur", onBlur);
+    input.addEventListener('input', changeValue)
+    input.addEventListener('focus', onFocus)
+    input.addEventListener('blur', onBlur)
     return () => {
-      input.removeEventListener("input", changeValue);
-    };
-  });
+      input.removeEventListener('input', changeValue)
+    }
+  })
   return (
     <StyledInput color={color}>
-      {type == "textarea" ? (
+      {type === 'textarea' ? (
         <textarea name={id} id={id} rows={rows} placeholder={placeholder} />
       ) : (
         <input id={id} name={id} type={type} placeholder={placeholder} />
       )}
-      <FontAwesomeIcon className="icon" icon={["fas", icon]} />
+      <FontAwesomeIcon className="icon" icon={['fas', icon]} />
     </StyledInput>
-  );
+  )
 }
 
 const StyledInput = styled.div`
@@ -84,4 +84,4 @@ const StyledInput = styled.div`
       font-size: 0.8rem;
     }
   }
-`;
+`

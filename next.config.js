@@ -1,6 +1,6 @@
-const path = require("path");
+const path = require('path')
 
-require("dotenv").config();
+require('dotenv').config()
 
 module.exports = {
   env: {
@@ -8,9 +8,9 @@ module.exports = {
   },
 
   webpack: (config) => {
-    config.resolve.alias["components"] = path.join(__dirname, "components");
-    config.resolve.alias["public"] = path.join(__dirname, "public");
+    config.resolve.alias.components = path.join(__dirname, 'components')
+    config.resolve.alias.public = path.join(__dirname, 'public')
 
-    return config;
+    return config
   },
-};
+}

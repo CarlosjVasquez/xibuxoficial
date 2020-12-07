@@ -1,7 +1,7 @@
-import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
-import LogoMenutwo from "../Logos/Menutwo";
-import LinkNav from "./LinkNav";
+import styled from '@emotion/styled'
+import { useEffect, useState } from 'react'
+import LogoMenutwo from '../Logos/Menutwo'
+import LinkNav from './LinkNav'
 
 export default function Header({
   links,
@@ -14,37 +14,37 @@ export default function Header({
   scrollActive,
   backActive,
 }) {
-  const [mode, setMode] = useState(white);
+  const [mode, setMode] = useState(white)
   const [back, setBack] = useState(
     backActive === undefined ? false : backActive
-  );
+  )
   useEffect(() => {
     if (scrollActive) {
       const scroll = () => {
         if (window.scrollY >= 250) {
-          setMode(false);
-          setBack(true);
+          setMode(false)
+          setBack(true)
         } else {
-          setMode(true);
-          setBack(false);
+          setMode(true)
+          setBack(false)
         }
-      };
+      }
 
-      window.addEventListener("scroll", scroll);
+      window.addEventListener('scroll', scroll)
     }
 
     return () => {
       if (scrollActive) {
-        window.removeEventListener("scroll", scroll);
+        window.removeEventListener('scroll', scroll)
       }
-    };
-  });
+    }
+  })
 
   return (
     <>
       <HeaderStyled
-        back={back ? "#fff" : "transparent"}
-        box={back ? "0px 0px 4px 0px #3b3b3b99" : "none"}
+        back={back ? '#fff' : 'transparent'}
+        box={back ? '0px 0px 4px 0px #3b3b3b99' : 'none'}
         load={load}
         project={project}
       >
@@ -56,13 +56,13 @@ export default function Header({
               <img src="/images/xibux-logo.png" alt="Xibux Logo" />
             )}
           </div>
-          <div className={active == 1 ? "menu show-menu" : "menu hide-menu"}>
-            <LinkNav links={links} first={first} color={mode ? "1" : 0} />
+          <div className={active === 1 ? 'menu show-menu' : 'menu hide-menu'}>
+            <LinkNav links={links} first={first} color={mode ? '1' : 0} />
           </div>
           <div className="btn">
             <LogoMenutwo
               height="40px"
-              fill={mode ? "#fff" : "#021154"}
+              fill={mode ? '#fff' : '#021154'}
               fillpoint="#0DFF7C"
               fillsecond="#FF6200"
               onClick={onHandleClick}
@@ -72,7 +72,7 @@ export default function Header({
         </div>
       </HeaderStyled>
     </>
-  );
+  )
 }
 
 const HeaderStyled = styled.header`
@@ -85,7 +85,7 @@ const HeaderStyled = styled.header`
   z-index: ${(props) => (props.project ? 0 : 15)};
   background: ${(props) => props.back};
   box-shadow: ${(props) => props.box};
-  transform: translateY(${(props) => (props.load ? "0" : "-100%")});
+  transform: translateY(${(props) => (props.load ? '0' : '-100%')});
   transition: all 0.3s linear;
   .cont-header {
     display: flex;
@@ -136,4 +136,4 @@ const HeaderStyled = styled.header`
       }
     }
   }
-`;
+`

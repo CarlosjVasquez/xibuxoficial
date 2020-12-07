@@ -1,32 +1,31 @@
-import { useState, useEffect } from "react";
-import styled from "@emotion/styled";
-import * as THREE from "three/build/three.module";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
-import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
-import { Interaction } from "three.interaction";
+import { useState, useEffect } from 'react'
+import styled from '@emotion/styled'
+import * as THREE from 'three/build/three.module'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass'
 
 function SceneTwo({ gltfs }) {
-  const { API_URL } = process.env;
-  const [text, setText] = useState(0);
+  const { API_URL } = process.env
+  const [text, setText] = useState(0)
 
   useEffect(() => {
-    var clock = new THREE.Clock();
+    const clock = new THREE.Clock()
 
-    var canvas;
-    var renderer;
-    var transition;
-    var composer;
-    var renderPass;
-    var activeTransition = true;
-    var transitionCount = 0;
-    var textureval = 3;
-    var first = 0;
-    var second = true;
-    var scenestotal = 0;
+    let canvas
+    let renderer
+    let transition
+    let composer
+    let renderPass
+    let activeTransition = true
+    let transitionCount = 0
+    const textureval = 3
+    let first = 0
+    let second = true
+    let scenestotal = 0
 
     function Transition(scenes) {
-      this.scene = new THREE.Scene();
+      this.scene = new THREE.Scene()
 
       this.cameraOrtho = new THREE.OrthographicCamera(
         window.innerWidth / -2,
@@ -35,29 +34,30 @@ function SceneTwo({ gltfs }) {
         window.innerHeight / -2,
         -10,
         10
-      );
+      )
 
-      this.textures = [];
+      this.textures = []
 
-      var loader = new THREE.TextureLoader();
+      const loader = new THREE.TextureLoader()
 
-      for (var i = 0; i < 4; i++)
+      for (let i = 0; i < 4; i++) {
         this.textures[i] = loader.load(
-          "textures/transition/transition" + (i + 1) + ".png"
-        );
+          'textures/transition/transition' + (i + 1) + '.png'
+        )
+      }
 
       this.quadmaterial = new THREE.ShaderMaterial({
         uniforms: {
           tDiffuse1: {
-            type: "t",
+            type: 't',
             value: null,
           },
           tDiffuse2: {
-            type: "t",
+            type: 't',
             value: null,
           },
           mixRatio: {
-            type: "f",
+            type: 'f',
             value: 0.0,
           },
           threshold: {
@@ -105,118 +105,116 @@ function SceneTwo({ gltfs }) {
   
   
   }`,
-      });
+      })
 
-      var quadgeometry = new THREE.PlaneGeometry(
+      const quadgeometry = new THREE.PlaneGeometry(
         window.innerWidth,
         window.innerHeight
-      );
+      )
 
-      this.quad = new THREE.Mesh(quadgeometry, this.quadmaterial);
-      this.scene.add(this.quad);
+      this.quad = new THREE.Mesh(quadgeometry, this.quadmaterial)
+      this.scene.add(this.quad)
 
       // Link both scenes and their FBOs
 
-      this.scenas = [];
-      for (var i = 0; i < scenestotal; i++) {
-        var scenea = scenes[i];
-        this.scenas.push(scenea);
+      this.scenas = []
+      for (let i = 0; i < scenestotal; i++) {
+        const scenea = scenes[i]
+        this.scenas.push(scenea)
       }
 
-      this.sceneA = this.scenas[first];
-      this.sceneB = this.scenas[first + 1];
+      this.sceneA = this.scenas[first]
+      this.sceneB = this.scenas[first + 1]
 
       this.quadmaterial.uniforms.tDiffuse1.value = this.scenas[
         first + 1
-      ].fbo.texture;
+      ].fbo.texture
       this.quadmaterial.uniforms.tDiffuse2.value = this.scenas[
         first
-      ].fbo.texture;
+      ].fbo.texture
 
-      this.needChange = false;
+      this.needChange = false
 
-      let transitionParams = {
+      const transitionParams = {
         transition: 0,
         transitionSpeed: 1.0,
-      };
+      }
 
       this.changeTDiffuseRight = function () {
         if (second) {
-          this.sceneB = scenes[scenestotal - 1 > first ? first + 1 : 0];
+          this.sceneB = scenes[scenestotal - 1 > first ? first + 1 : 0]
 
           this.quadmaterial.uniforms.tDiffuse1.value =
-            scenes[scenestotal - 1 > first ? first + 1 : 0].fbo.texture;
+            scenes[scenestotal - 1 > first ? first + 1 : 0].fbo.texture
         } else {
-          this.sceneA = scenes[scenestotal - 1 > first ? first + 1 : 0];
+          this.sceneA = scenes[scenestotal - 1 > first ? first + 1 : 0]
 
           this.quadmaterial.uniforms.tDiffuse2.value =
-            scenes[scenestotal - 1 > first ? first + 1 : 0].fbo.texture;
+            scenes[scenestotal - 1 > first ? first + 1 : 0].fbo.texture
         }
-      };
+      }
       this.changeTDiffuseLeft = function () {
         if (second) {
-          this.sceneB = scenes[first < 1 ? scenestotal - 1 : first - 1];
+          this.sceneB = scenes[first < 1 ? scenestotal - 1 : first - 1]
 
           this.quadmaterial.uniforms.tDiffuse1.value =
-            scenes[first < 1 ? scenestotal - 1 : first - 1].fbo.texture;
+            scenes[first < 1 ? scenestotal - 1 : first - 1].fbo.texture
         } else {
-          this.sceneA = scenes[first < 1 ? scenestotal - 1 : first - 1];
+          this.sceneA = scenes[first < 1 ? scenestotal - 1 : first - 1]
 
           this.quadmaterial.uniforms.tDiffuse2.value =
-            scenes[first < 1 ? scenestotal - 1 : first - 1].fbo.texture;
+            scenes[first < 1 ? scenestotal - 1 : first - 1].fbo.texture
         }
-      };
+      }
 
       this.change = function () {
-        this.quadmaterial.uniforms.tMixTexture.value = this.textures[
-          textureval
-        ];
-      };
+        this.quadmaterial.uniforms.tMixTexture.value = this.textures[textureval]
+      }
 
       this.renderS = function (delta) {
         transitionParams.transition = THREE.Math.smoothstep(
           transitionCount,
           0,
           1
-        );
+        )
 
-        this.quadmaterial.uniforms.mixRatio.value = transitionParams.transition;
+        this.quadmaterial.uniforms.mixRatio.value = transitionParams.transition
 
         // Prevent render both scenes when it's not necessary
-        if (transitionParams.transition == 0) {
-          this.sceneA.renderS(delta, false);
-        } else if (transitionParams.transition == 1) {
-          this.sceneB.renderS(delta, false);
+        if (transitionParams.transition === 0) {
+          this.sceneA.renderS(delta, false)
+        } else if (transitionParams.transition === 1) {
+          this.sceneB.renderS(delta, false)
         } else {
-          this.sceneA.renderS(delta, true);
-          this.sceneB.renderS(delta, true);
-          this.sceneA.addScene();
-          this.sceneB.addScene();
-          renderer.setRenderTarget(null);
-          renderer.clear();
-          composer = new EffectComposer(renderer);
-          renderPass = new RenderPass(this.scene, this.cameraOrtho);
-          composer.addPass(renderPass);
-          composer.render();
+          this.sceneA.renderS(delta, true)
+          this.sceneB.renderS(delta, true)
+          this.sceneA.addScene()
+          this.sceneB.addScene()
+          renderer.setRenderTarget(null)
+          renderer.clear()
+          composer = new EffectComposer(renderer)
+          renderPass = new RenderPass(this.scene, this.cameraOrtho)
+          composer.addPass(renderPass)
+          composer.render()
         }
-      };
+      }
     }
 
     const updateObjects = gltfs.map((item) => {
-      const object = new THREE.Object3D();
+      const object = new THREE.Object3D()
 
-      const gltfloader = new GLTFLoader();
+      const gltfloader = new GLTFLoader()
       gltfloader.load(`${API_URL + item.gltf.url}`, (gltf) => {
-        let model = gltf.scene;
-        model.position.set(0, 0, 0);
-        model.rotation.y = 2;
-        object.add(model);
-      });
-      object.position.set(3, 0, 0);
-      object.rotation.y = -0.2;
+        const model = gltf.scene
+        model.position.set(0, 0, 0)
+        model.rotation.y = 2
+        object.add(model)
+      })
+      object.position.set(3, 0, 0)
+      object.rotation.y = -0.2
 
-      return object;
-    });
+      return object
+    })
 
     function Scene(model) {
       this.camera = new THREE.PerspectiveCamera(
@@ -224,165 +222,164 @@ function SceneTwo({ gltfs }) {
         window.innerWidth / window.innerHeight,
         0.1,
         1000
-      );
-      this.camera.position.z = 10;
+      )
+      this.camera.position.z = 10
 
       // Setup scene
-      this.scene = new THREE.Scene();
-      this.scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+      this.scene = new THREE.Scene()
+      this.scene.add(new THREE.AmbientLight(0xffffff, 0.7))
 
-      var renderTargetParameters = {
+      const renderTargetParameters = {
         minFilter: THREE.LinearFilter,
         magFilter: THREE.LinearFilter,
         format: THREE.RGBAFormat,
         stencilBuffer: false,
-      };
+      }
       this.fbo = new THREE.WebGLRenderTarget(
         window.innerWidth,
         window.innerHeight,
         renderTargetParameters
-      );
+      )
 
-      this.obj = updateObjects[model];
-      this.scene.add(this.obj);
-
-      var interaction = new Interaction(renderer, this.scene, this.camera);
+      this.obj = updateObjects[model]
+      this.scene.add(this.obj)
 
       // this.obj.on("click", handleClick);
 
       this.clearScene = function () {
-        this.scene.remove(this.obj);
-      };
+        this.scene.remove(this.obj)
+      }
       this.addScene = function () {
-        this.scene.add(this.obj);
-      };
+        this.scene.add(this.obj)
+      }
 
       this.renderS = function (delta, rtt) {
         if (rtt) {
-          renderer.setRenderTarget(this.fbo); // addition
-          renderer.clear();
-          renderer.render(this.scene, this.camera);
+          renderer.setRenderTarget(this.fbo) // addition
+          renderer.clear()
+          renderer.render(this.scene, this.camera)
         } else {
-          renderer.setRenderTarget(null);
-          renderer.clear();
-          renderer.render(this.scene, this.camera);
+          renderer.setRenderTarget(null)
+          renderer.clear()
+          renderer.render(this.scene, this.camera)
         }
-      };
+      }
     }
 
     function init() {
-      canvas = document.getElementById("renderElement");
+      canvas = document.getElementById('renderElement')
 
       renderer = new THREE.WebGLRenderer({
         canvas,
         antialias: true,
         alpha: true,
-      });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.sortObjects = false;
-      renderer.autoClear = false;
+      })
+      renderer.setSize(window.innerWidth, window.innerHeight)
+      renderer.sortObjects = false
+      renderer.autoClear = false
 
-      var scenes = [];
+      const scenes = []
 
-      for (var i = 0; i < updateObjects.length; i++) {
-        var sc = new Scene(i);
-        scenes.push(sc);
+      for (let i = 0; i < updateObjects.length; i++) {
+        const sc = new Scene(i)
+        scenes.push(sc)
       }
 
-      scenestotal = updateObjects.length;
+      scenestotal = updateObjects.length
 
-      transition = new Transition(scenes);
+      transition = new Transition(scenes)
 
-      animate();
+      animate()
     }
 
     function animate() {
-      requestAnimationFrame(animate);
+      requestAnimationFrame(animate)
 
-      renderS();
+      renderS()
     }
 
     function renderS() {
-      transition.renderS(clock.getDelta());
+      transition.renderS(clock.getDelta())
     }
 
     function handleClick() {
-      activeTransition ? (activeTransition = false) : (activeTransition = true);
+      let timeID
+      activeTransition ? (activeTransition = false) : (activeTransition = true)
       // textureval = Math.floor(Math.random() * 3);
       if (activeTransition) {
-        var timeID = setInterval(() => {
-          transitionCount -= 0.02;
-        }, 25);
+        timeID = setInterval(() => {
+          transitionCount -= 0.02
+        }, 25)
       } else {
-        var timeID = setInterval(() => {
-          transitionCount += 0.02;
-        }, 25);
+        timeID = setInterval(() => {
+          transitionCount += 0.02
+        }, 25)
       }
 
       setTimeout(() => {
-        clearInterval(timeID);
-      }, 1500);
-      transition.change();
+        clearInterval(timeID)
+      }, 1500)
+      transition.change()
     }
 
     function handleClickRight() {
-      handleClick();
+      handleClick()
       setTimeout(() => {
-        scenestotal - 1 > first ? (first += 1) : (first = 0);
-        second ? (second = false) : (second = true);
-        transition.changeTDiffuseRight();
-      }, 1500);
-      second ? (text = 1) : (text = 0);
+        scenestotal - 1 > first ? (first += 1) : (first = 0)
+        second ? (second = false) : (second = true)
+        transition.changeTDiffuseRight()
+      }, 1500)
+      second ? setText(1) : setText(0)
     }
 
     function handleClickLeft() {
-      handleClick();
+      handleClick()
       setTimeout(() => {
-        first < 1 ? (first = scenestotal - 1) : (first -= 1);
-        second ? (second = false) : (second = true);
-        transition.changeTDiffuseLeft();
-      }, 1500);
+        first < 1 ? (first = scenestotal - 1) : (first -= 1)
+        second ? (second = false) : (second = true)
+        transition.changeTDiffuseLeft()
+      }, 1500)
     }
 
-    window.addEventListener("load", init);
+    window.addEventListener('load', init)
     document
-      .getElementById("handleClickLeft")
-      .addEventListener("click", handleClickLeft);
+      .getElementById('handleClickLeft')
+      .addEventListener('click', handleClickLeft)
     document
-      .getElementById("handleClickRight")
-      .addEventListener("click", handleClickRight);
+      .getElementById('handleClickRight')
+      .addEventListener('click', handleClickRight)
 
     return () => {
-      window.removeEventListener("load", init);
+      window.removeEventListener('load', init)
       document
-        .getElementById("handleClickLeft")
-        .removeEventListener("click", handleClickLeft);
+        .getElementById('handleClickLeft')
+        .removeEventListener('click', handleClickLeft)
       document
-        .getElementById("handleClickRight")
-        .removeEventListener("click", handleClickRight);
-    };
-  });
+        .getElementById('handleClickRight')
+        .removeEventListener('click', handleClickRight)
+    }
+  })
 
   useEffect(() => {
     const handleClick = () => {
-      text == 0 ? setText(1) : setText(0);
-    };
+      text === 0 ? setText(1) : setText(0)
+    }
 
-    document.getElementById("btnsss").addEventListener("click", handleClick);
-  });
+    document.getElementById('btnsss').addEventListener('click', handleClick)
+  })
 
   return (
     <StyledScene>
       <canvas id="renderElement"></canvas>
       <div className="btns">
-        <a id={"handleClickLeft"}>Left</a>
-        <a id={"handleClickRight"}>Right</a>
+        <a id={'handleClickLeft'}>Left</a>
+        <a id={'handleClickRight'}>Right</a>
       </div>
       <div id="btnsss" className="text">
         <h1>{text}</h1>
       </div>
     </StyledScene>
-  );
+  )
 }
 
 const StyledScene = styled.div`
@@ -411,6 +408,6 @@ const StyledScene = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
   }
-`;
+`
 
-export default SceneTwo;
+export default SceneTwo

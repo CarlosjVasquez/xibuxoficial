@@ -1,20 +1,20 @@
-import * as THREE from "three";
-import { extend } from "react-three-fiber";
+import * as THREE from 'three'
+import { extend } from 'react-three-fiber'
 
 export default class Fade extends THREE.ShaderMaterial {
   constructor() {
     super({
       uniforms: {
         tDiffuse1: {
-          type: "t",
+          type: 't',
           value: null,
         },
         tDiffuse2: {
-          type: "t",
+          type: 't',
           value: null,
         },
         mixRatio: {
-          type: "f",
+          type: 'f',
           value: 0.0,
         },
         threshold: {
@@ -62,34 +62,41 @@ export default class Fade extends THREE.ShaderMaterial {
       
       
       }`,
-    });
+    })
   }
 
   get texture() {
-    return this.uniforms.tDiffuse1.value;
+    return this.uniforms.tDiffuse1.value
   }
+
   set texture(v) {
-    this.uniforms.tDiffuse1.value = v;
+    this.uniforms.tDiffuse1.value = v
   }
+
   get texture2() {
-    return this.uniforms.tDiffuse2.value;
+    return this.uniforms.tDiffuse2.value
   }
+
   set texture2(v) {
-    this.uniforms.tDiffuse2.value = v;
+    this.uniforms.tDiffuse2.value = v
   }
+
   get disp() {
-    return this.uniforms.tMixTexture.value;
+    return this.uniforms.tMixTexture.value
   }
+
   set disp(v) {
-    this.uniforms.tMixTexture.value = v;
+    this.uniforms.tMixTexture.value = v
   }
+
   get dispFactor() {
-    return this.uniforms.mixRatio.value;
+    return this.uniforms.mixRatio.value
   }
+
   set dispFactor(v) {
-    this.uniforms.mixRatio.value = v;
+    this.uniforms.mixRatio.value = v
   }
 }
 
 // register element in r3f (<fade />)
-extend({ Fade });
+extend({ Fade })

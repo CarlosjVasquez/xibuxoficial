@@ -1,30 +1,30 @@
-import Head from "next/head";
-import fetch from "isomorphic-unfetch";
-import { useState, useRef, useEffect } from "react";
-import dynamic from "next/dynamic";
-import styled from "@emotion/styled";
+import Head from 'next/head'
+import fetch from 'isomorphic-unfetch'
+import { useState, useRef, useEffect } from 'react'
+import dynamic from 'next/dynamic'
+import styled from '@emotion/styled'
 
-import Header from "components/Header/Header";
-import SocialMedia from "components/SocialMedia";
+import Header from 'components/Header/Header'
+import SocialMedia from 'components/SocialMedia'
 
-const Scene3 = dynamic(() => import(`components/ModelsReview/Wine`), {
+const Scene3 = dynamic(() => import('components/ModelsReview/Wine'), {
   ssr: false,
-});
+})
 
 export default function Home({ links, linksSocial, loader }) {
-  const [activeMenu, setActiveMenu] = useState(1);
-  const [load, setLoad] = useState(false);
-  const container = useRef();
+  const [activeMenu, setActiveMenu] = useState(1)
+  const [load, setLoad] = useState(false)
+  const container = useRef()
 
   useEffect(() => {
     if (container.current && !loader) {
       setTimeout(() => {
-        setLoad(true);
-      }, 500);
+        setLoad(true)
+      }, 500)
     } else if (loader) {
-      setLoad(false);
+      setLoad(false)
     }
-  });
+  })
 
   return (
     <StyledIndex>
@@ -34,18 +34,18 @@ export default function Home({ links, linksSocial, loader }) {
       <Header
         links={links}
         first={0}
-        onHandleClick={() => setActiveMenu(activeMenu == 1 ? 0 : 1)}
+        onHandleClick={() => setActiveMenu(activeMenu === 1 ? 0 : 1)}
         active={activeMenu}
         white={true}
         load={load}
         scrollActive={false}
       />
-      <SocialMedia linksSocial={linksSocial} color={"#fff"} />
+      <SocialMedia linksSocial={linksSocial} color={'#fff'} />
       <StyledContainer ref={container} load={load}>
         <Scene3 />
       </StyledContainer>
     </StyledIndex>
-  );
+  )
 }
 
 const StyledContainer = styled.div`
@@ -55,26 +55,26 @@ const StyledContainer = styled.div`
   width: 100%;
   height: 100%;
   transition: all 0.5s ease;
-  transform: translateY(${(props) => (props.load ? "0" : "-100%")});
-`;
+  transform: translateY(${(props) => (props.load ? '0' : '-100%')});
+`
 
 const StyledIndex = styled.div`
   overflow: hidden;
-`;
+`
 
 export async function getServerSideProps() {
-  const { API_URL } = process.env;
+  const { API_URL } = process.env
 
-  const resNav = await fetch(`${API_URL}/menu-links`);
-  const resSocial = await fetch(`${API_URL}/social-medias`);
+  const resNav = await fetch(`${API_URL}/menu-links`)
+  const resSocial = await fetch(`${API_URL}/social-medias`)
 
-  const dataNav = await resNav.json();
-  const dataSocial = await resSocial.json();
+  const dataNav = await resNav.json()
+  const dataSocial = await resSocial.json()
 
   return {
     props: {
       links: dataNav,
       linksSocial: dataSocial,
     },
-  };
+  }
 }

@@ -1,22 +1,22 @@
-import styled from "@emotion/styled";
-import * as THREE from "three";
-import { Canvas } from "react-three-fiber";
-import { OrbitControls } from "drei";
+import styled from '@emotion/styled'
+import * as THREE from 'three'
+import { Canvas } from 'react-three-fiber'
+import { OrbitControls } from 'drei'
 
-import { Suspense } from "react";
-import Model from "./Model";
+import { Suspense } from 'react'
+import Model from './Model'
 
 export default function SceneThree({ category, active, project }) {
   return (
     <StyledCanvas>
-      <div className={project ? "active scene" : "inactive scene"}>
+      <div className={project ? 'active scene' : 'inactive scene'}>
         <Canvas
           pixelRatio={window.devicePixelRatio}
           camera={{ position: [0, 0, 20] }}
           gl={{ antialias: true }}
           onCreated={({ gl }) => {
-            gl.toneMapping = THREE.ACESFilmicToneMapping;
-            gl.outputEncoding = THREE.sRGBEncoding;
+            gl.toneMapping = THREE.ACESFilmicToneMapping
+            gl.outputEncoding = THREE.sRGBEncoding
           }}
         >
           <OrbitControls enablePan={false} enableZoom={false} />
@@ -26,21 +26,23 @@ export default function SceneThree({ category, active, project }) {
             <group>
               {category &&
                 category.map((item, key) => {
-                  return (
-                    <Model
-                      key={key}
-                      category={item}
-                      animated={key === active ? true : false}
-                      project={project}
-                    />
-                  );
+                  if (item.active) {
+                    return (
+                      <Model
+                        key={key}
+                        category={item}
+                        animated={key === active}
+                        project={project}
+                      />
+                    )
+                  }
                 })}
             </group>
           </Suspense>
         </Canvas>
       </div>
     </StyledCanvas>
-  );
+  )
 }
 
 const StyledCanvas = styled.div`
@@ -96,4 +98,4 @@ const StyledCanvas = styled.div`
       transform: translateX(15%);
     }
   }
-`;
+`

@@ -1,41 +1,41 @@
-import Head from "next/head";
-import Header from "../components/Header/Header";
-import SocialMedia from "../components/SocialMedia";
-import styled from "@emotion/styled";
+import Head from 'next/head'
+import Header from '../components/Header/Header'
+import SocialMedia from '../components/SocialMedia'
+import styled from '@emotion/styled'
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react'
 
 export default function About({ links, linksSocial, infoAbout, loader }) {
-  const [activeMenu, setActiveMenu] = useState(1);
-  const [load, setLoad] = useState(false);
-  const [showTeam, setShowTeam] = useState(false);
-  const [usersTeam, setUsersTeam] = useState(false);
-  const [imgUno, setImgUno] = useState(false);
-  const [imgDos, setImgDos] = useState(false);
-  const [imgBanner, setImgBanner] = useState(false);
+  const [activeMenu, setActiveMenu] = useState(1)
+  const [load, setLoad] = useState(false)
+  const [showTeam, setShowTeam] = useState(false)
+  const [usersTeam, setUsersTeam] = useState(false)
+  const [imgUno, setImgUno] = useState(false)
+  const [imgDos, setImgDos] = useState(false)
+  const [imgBanner, setImgBanner] = useState(false)
 
-  const banner = useRef();
-  const des = useRef();
-  const team = useRef();
-  const contact = useRef();
+  const banner = useRef()
+  const des = useRef()
+  const team = useRef()
+  const contact = useRef()
 
   useEffect(() => {
     const scrollTeam = () => {
-      var top = team.current.getBoundingClientRect().y;
+      const top = team.current.getBoundingClientRect().y
       if (top <= 520) {
-        !showTeam && setShowTeam(true);
+        !showTeam && setShowTeam(true)
       }
       if (top <= 250) {
-        !usersTeam && setUsersTeam(true);
+        !usersTeam && setUsersTeam(true)
       }
-    };
+    }
 
-    window.addEventListener("scroll", scrollTeam);
+    window.addEventListener('scroll', scrollTeam)
 
     return () => {
-      window.removeEventListener("scroll", scrollTeam);
-    };
-  });
+      window.removeEventListener('scroll', scrollTeam)
+    }
+  })
 
   useEffect(() => {
     if (
@@ -49,12 +49,12 @@ export default function About({ links, linksSocial, infoAbout, loader }) {
       !loader
     ) {
       setTimeout(() => {
-        setLoad(true);
-      }, 500);
+        setLoad(true)
+      }, 500)
     } else if (loader) {
-      setLoad(false);
+      setLoad(false)
     }
-  });
+  })
 
   return (
     <>
@@ -64,7 +64,7 @@ export default function About({ links, linksSocial, infoAbout, loader }) {
       <Header
         links={links}
         first={0}
-        onHandleClick={() => setActiveMenu(activeMenu == 1 ? 0 : 1)}
+        onHandleClick={() => setActiveMenu(activeMenu === 1 ? 0 : 1)}
         active={activeMenu}
         white={true}
         load={load}
@@ -72,10 +72,10 @@ export default function About({ links, linksSocial, infoAbout, loader }) {
       />
       <SocialMedia linksSocial={linksSocial} />
       <StyledBanner ref={banner}>
-        <div className={load ? "logo active" : "logo"}>
+        <div className={load ? 'logo active' : 'logo'}>
           <img id="img" src="./images/logo.svg" alt="" />
         </div>
-        <div className={load ? "title active" : "title"}>
+        <div className={load ? 'title active' : 'title'}>
           <div className="imgback">
             <img
               onLoad={() => setImgBanner(true)}
@@ -87,18 +87,18 @@ export default function About({ links, linksSocial, infoAbout, loader }) {
         </div>
       </StyledBanner>
       <StyledDescription ref={des}>
-        <div className={load ? "content active" : "content"}>
+        <div className={load ? 'content active' : 'content'}>
           <p>{infoAbout[0].des_principal}</p>
         </div>
         <div className="gallery">
-          <div className={load ? "img active" : "img"}>
+          <div className={load ? 'img active' : 'img'}>
             <img
               onLoad={() => setImgUno(true)}
               src={infoAbout[0].img_description1.url}
               alt=""
             />
           </div>
-          <div className={load ? "img active" : "img"}>
+          <div className={load ? 'img active' : 'img'}>
             <img
               onLoad={() => setImgDos(true)}
               src={infoAbout[0].img_description2.url}
@@ -109,10 +109,10 @@ export default function About({ links, linksSocial, infoAbout, loader }) {
       </StyledDescription>
       <StyledTeam
         ref={team}
-        title={showTeam ? "scale(1)" : "scale(0)"}
-        des={showTeam ? "scale(1)" : "scale(0)"}
-        users={usersTeam ? "translateY(0)" : "translateY(50%)"}
-        load={load ? "translateX(0)" : "translateX(100%)"}
+        title={showTeam ? 'scale(1)' : 'scale(0)'}
+        des={showTeam ? 'scale(1)' : 'scale(0)'}
+        users={usersTeam ? 'translateY(0)' : 'translateY(50%)'}
+        load={load ? 'translateX(0)' : 'translateX(100%)'}
       >
         <div className="contentTeam">
           <div className="title">
@@ -151,7 +151,7 @@ export default function About({ links, linksSocial, infoAbout, loader }) {
         </div>
       </StyledContact>
     </>
-  );
+  )
 }
 
 const StyledContact = styled.div`
@@ -200,7 +200,7 @@ const StyledContact = styled.div`
       font-size: 1.5rem;
     }
   }
-`;
+`
 
 const StyledTeam = styled.div`
   width: 100%;
@@ -321,7 +321,7 @@ const StyledTeam = styled.div`
       font-size: 2.5rem;
     }
   }
-`;
+`
 
 const StyledDescription = styled.div`
   width: 100%;
@@ -389,7 +389,7 @@ const StyledDescription = styled.div`
       font-size: 3rem;
     }
   }
-`;
+`
 
 const StyledBanner = styled.div`
   width: 100%;
@@ -453,18 +453,18 @@ const StyledBanner = styled.div`
       font-size: 20rem;
     }
   }
-`;
+`
 
 export async function getServerSideProps() {
-  const { API_URL } = process.env;
+  const { API_URL } = process.env
 
-  const resNav = await fetch(`${API_URL}/menu-links`);
-  const resSocial = await fetch(`${API_URL}/social-medias`);
-  const resAbout = await fetch(`${API_URL}/abouts`);
+  const resNav = await fetch(`${API_URL}/menu-links`)
+  const resSocial = await fetch(`${API_URL}/social-medias`)
+  const resAbout = await fetch(`${API_URL}/abouts`)
 
-  const dataNav = await resNav.json();
-  const dataSocial = await resSocial.json();
-  const dataAbout = await resAbout.json();
+  const dataNav = await resNav.json()
+  const dataSocial = await resSocial.json()
+  const dataAbout = await resAbout.json()
 
   return {
     props: {
@@ -472,5 +472,5 @@ export async function getServerSideProps() {
       linksSocial: dataSocial,
       infoAbout: dataAbout,
     },
-  };
+  }
 }

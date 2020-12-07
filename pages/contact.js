@@ -1,117 +1,112 @@
-import Head from "next/head";
-import Header from "../components/Header/Header";
-import SocialMedia from "../components/SocialMedia";
-import InputSimple from "../components/Inputs/Input";
-import Loader from "react-loader-spinner";
+import Head from 'next/head'
+import Header from '../components/Header/Header'
+import SocialMedia from '../components/SocialMedia'
+import InputSimple from '../components/Inputs/Input'
+import Loader from 'react-loader-spinner'
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import styled from "@emotion/styled";
+import styled from '@emotion/styled'
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react'
 
 export default function Contact({ links, linksSocial, contact, loader }) {
-  const [activeMenu, setActiveMenu] = useState(1);
-  const [videoActive, setVideoActive] = useState(1);
-  const [firstVideo, setFirstVideo] = useState(false);
-  const [secondVideo, setSecondVideo] = useState(false);
-  const [finalVideo, setFinalVideo] = useState(false);
-  const [load, setLoad] = useState(false);
-  const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [emailValidate, setEmailValidate] = useState(undefined);
-  const [message, setMessage] = useState("");
-  const [errVerify, setErrVerify] = useState(false);
-  const [errName, setErrName] = useState("");
-  const [sendProcess, setSendProcess] = useState(1);
+  const [activeMenu, setActiveMenu] = useState(1)
+  const [videoActive, setVideoActive] = useState(1)
+  const [secondVideo, setSecondVideo] = useState(false)
+  const [finalVideo, setFinalVideo] = useState(false)
+  const [load, setLoad] = useState(false)
+  const [name, setName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [emailValidate, setEmailValidate] = useState(undefined)
+  const [message, setMessage] = useState('')
+  const [errVerify, setErrVerify] = useState(false)
+  const [errName, setErrName] = useState('')
+  const [sendProcess, setSendProcess] = useState(1)
 
   useEffect(() => {
-    !loader &&
-      console.log(
-        firstVideo + " " + secondVideo + " " + finalVideo + " " + load
-      );
     if (secondVideo && finalVideo && !loader) {
       setTimeout(() => {
-        setLoad(true);
-      }, 500);
+        setLoad(true)
+      }, 500)
     } else if (loader) {
-      setLoad(false);
+      setLoad(false)
     }
-  });
+  })
 
   const handleClick = () => {
-    if (name == "") {
-      err("name");
-      return;
+    if (name === '') {
+      err('name')
+      return
     }
-    if (lastName == "") {
-      err("lastname");
-      return;
+    if (lastName === '') {
+      err('lastname')
+      return
     }
-    if (email == "" || !emailValidate) {
-      err("email");
-      return;
+    if (email === '' || !emailValidate) {
+      err('email')
+      return
     }
-    if (message == "") {
-      err("message");
-      return;
+    if (message === '') {
+      err('message')
+      return
     }
 
     if (
-      message != "" &&
-      email != "" &&
+      message !== '' &&
+      email !== '' &&
       emailValidate &&
-      lastName != "" &&
-      name != ""
+      lastName !== '' &&
+      name !== ''
     ) {
-      setErrVerify(false);
-      setSendProcess(2);
-      sendEmail();
+      setErrVerify(false)
+      setSendProcess(2)
+      sendEmail()
     }
-  };
+  }
 
   const confirmSend = () => {
-    setVideoActive(3);
-    setSendProcess(3);
-    const video = document.getElementById("videoFinal");
-    video.play();
-  };
+    setVideoActive(3)
+    setSendProcess(3)
+    const video = document.getElementById('videoFinal')
+    video.play()
+  }
 
   const errorSend = () => {
-    setSendProcess(4);
-  };
+    setSendProcess(4)
+  }
 
   const err = (name) => {
-    var option = document.getElementById(name);
-    option.parentNode.style.boxShadow = "0px 0px 3px 1px red";
+    const option = document.getElementById(name)
+    option.parentNode.style.boxShadow = '0px 0px 3px 1px red'
 
-    setErrName(option.placeholder);
-    setErrVerify(true);
-  };
+    setErrName(option.placeholder)
+    setErrVerify(true)
+  }
 
   const handleInput = (props) => {
     if (props) {
-      setVideoActive(2);
+      setVideoActive(2)
     } else {
-      setVideoActive(1);
+      setVideoActive(1)
     }
-  };
+  }
 
   const confirmEmail = (props) => {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    setEmail(props);
-    if (props === "") {
-      setEmailValidate(undefined);
-    } else if (props != "" && !re.test(props)) {
-      setEmailValidate(false);
-    } else if (props != "" && re.test(props)) {
-      setEmailValidate(true);
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    setEmail(props)
+    if (props === '') {
+      setEmailValidate(undefined)
+    } else if (props !== '' && !re.test(props)) {
+      setEmailValidate(false)
+    } else if (props !== '' && re.test(props)) {
+      setEmailValidate(true)
     }
-  };
+  }
 
   const sendEmail = async () => {
-    var html = `
+    const html = `
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
     
@@ -201,7 +196,7 @@ export default function Contact({ links, linksSocial, contact, loader }) {
                                                                                         <td class="esd-block-text es-p20t es-p5b" align="left">
                                                                                             <h3 style="color: #333333;">Hola ${
                                                                                               name +
-                                                                                              " " +
+                                                                                              ' ' +
                                                                                               lastName
                                                                                             } se quiere comunicar contigo,</h3>
                                                                                         </td>
@@ -309,30 +304,30 @@ export default function Contact({ links, linksSocial, contact, loader }) {
     </body>
     
     </html>
-    `;
+    `
 
-    var raw = JSON.stringify({
-      to: "virahondacarloscl@gmail.com",
-      from: "virahondacarlos@gmail.com",
-      replyTo: "no-reply@gmail.com",
-      subject: "Xibux Web Contact",
+    const raw = JSON.stringify({
+      to: 'virahondacarloscl@gmail.com',
+      from: 'virahondacarlos@gmail.com',
+      replyTo: 'no-reply@gmail.com',
+      subject: 'Xibux Web Contact',
       html: html,
-    });
+    })
 
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
+    const myHeaders = new Headers()
+    myHeaders.append('Content-Type', 'application/json')
 
-    var requestOptions = {
-      method: "POST",
+    const requestOptions = {
+      method: 'POST',
       headers: myHeaders,
       body: raw,
-    };
+    }
 
-    await fetch("https://xibuxcms.herokuapp.com/email", requestOptions)
+    await fetch('https://xibuxcms.herokuapp.com/email', requestOptions)
       .then((response) => response.text())
       .then(() => confirmSend())
-      .catch((error) => errorSend(error));
-  };
+      .catch((error) => errorSend(error))
+  }
 
   return (
     <>
@@ -342,17 +337,19 @@ export default function Contact({ links, linksSocial, contact, loader }) {
       <Header
         links={links}
         first={2}
-        onHandleClick={() => setActiveMenu(activeMenu == 1 ? 0 : 1)}
+        onHandleClick={() => setActiveMenu(activeMenu === 1 ? 0 : 1)}
         active={activeMenu}
         load={load}
       />
       <SocialMedia linksSocial={linksSocial} />
       <StyledBackVideo load={load}>
         <video
-          onCanPlayThrough={() => setFirstVideo(true)}
+          onCanPlayThrough={() => setFinalVideo(true)}
           id="videoFinal"
           className={
-            videoActive == 3 ? "videoactive showvideo" : "videoactive hidevideo"
+            videoActive === 3
+              ? 'videoactive showvideo'
+              : 'videoactive hidevideo'
           }
           src={contact[0].video3[0].url}
           muted
@@ -360,7 +357,9 @@ export default function Contact({ links, linksSocial, contact, loader }) {
         <video
           onCanPlayThrough={() => setSecondVideo(true)}
           className={
-            videoActive == 2 ? "videoactive showvideo" : "videoactive hidevideo"
+            videoActive === 2
+              ? 'videoactive showvideo'
+              : 'videoactive hidevideo'
           }
           src={contact[0].video2[0].url}
           autoPlay
@@ -370,7 +369,9 @@ export default function Contact({ links, linksSocial, contact, loader }) {
         <video
           onCanPlayThrough={() => setFinalVideo(true)}
           className={
-            videoActive == 1 ? "videoactive showvideo" : "videoactive hidevideo"
+            videoActive === 1
+              ? 'videoactive showvideo'
+              : 'videoactive hidevideo'
           }
           src={contact[0].video1[0].url}
           autoPlay
@@ -390,7 +391,7 @@ export default function Contact({ links, linksSocial, contact, loader }) {
               <div className="iconBox">
                 <FontAwesomeIcon
                   className="icon"
-                  icon={["fas", "times-circle"]}
+                  icon={['fas', 'times-circle']}
                 />
               </div>
               <div className="textBox">
@@ -399,18 +400,18 @@ export default function Contact({ links, linksSocial, contact, loader }) {
               </div>
             </div>
           )}
-          {sendProcess == 1 ? (
+          {sendProcess === 1 ? (
             <></>
-          ) : sendProcess == 2 ? (
+          ) : sendProcess === 2 ? (
             <div className="loader">
               <Loader type="TailSpin" color="#3b3b3b" height={40} width={40} />
             </div>
-          ) : sendProcess == 3 ? (
+          ) : sendProcess === 3 ? (
             <div className="messageSend">
               <div className="iconBox">
                 <FontAwesomeIcon
                   className="icon"
-                  icon={["fas", "check-circle"]}
+                  icon={['fas', 'check-circle']}
                 />
               </div>
               <div className="textBox">
@@ -423,7 +424,7 @@ export default function Contact({ links, linksSocial, contact, loader }) {
               <div className="iconBox">
                 <FontAwesomeIcon
                   className="icon"
-                  icon={["fas", "times-circle"]}
+                  icon={['fas', 'times-circle']}
                 />
               </div>
               <div className="textBox">
@@ -438,7 +439,7 @@ export default function Contact({ links, linksSocial, contact, loader }) {
               type="text"
               placeholder="Name"
               icon="user"
-              color={name != "" ? "#18CC9C" : "#3b69ff"}
+              color={name !== '' ? '#18CC9C' : '#3b69ff'}
               onChange={(props) => setName(props)}
               onInput={(props) => handleInput(props)}
             />
@@ -447,7 +448,7 @@ export default function Contact({ links, linksSocial, contact, loader }) {
               type="text"
               placeholder="Last Name"
               icon="user"
-              color={lastName != "" ? "#18CC9C" : "#3b69ff"}
+              color={lastName !== '' ? '#18CC9C' : '#3b69ff'}
               onChange={(props) => setLastName(props)}
               onInput={(props) => handleInput(props)}
             />
@@ -458,10 +459,10 @@ export default function Contact({ links, linksSocial, contact, loader }) {
               icon="envelope"
               color={
                 emailValidate === undefined
-                  ? "#3b69ff"
+                  ? '#3b69ff'
                   : emailValidate
-                  ? "#18CC9C"
-                  : "orange"
+                  ? '#18CC9C'
+                  : 'orange'
               }
               onChange={(props) => confirmEmail(props)}
               onInput={(props) => handleInput(props)}
@@ -471,7 +472,7 @@ export default function Contact({ links, linksSocial, contact, loader }) {
               type="textarea"
               placeholder="Message"
               icon="comment-alt"
-              color={message != "" ? "#18CC9C" : "#3b69ff"}
+              color={message !== '' ? '#18CC9C' : '#3b69ff'}
               onChange={(props) => setMessage(props)}
               onInput={(props) => handleInput(props)}
               rows="3"
@@ -483,7 +484,7 @@ export default function Contact({ links, linksSocial, contact, loader }) {
         </div>
       </StyledForm>
     </>
-  );
+  )
 }
 
 const StyledForm = styled.div`
@@ -629,7 +630,7 @@ const StyledForm = styled.div`
       height: 70%;
       min-height: 250px;
       transform: translateX(-25%)
-        translateY(${(props) => (props.load ? "-40%" : "100%")});
+        translateY(${(props) => (props.load ? '-40%' : '100%')});
       background: transparent;
       padding: 0 20px;
     }
@@ -651,7 +652,7 @@ const StyledForm = styled.div`
       display: flex;
     }
   }
-`;
+`
 
 const StyledBackVideo = styled.div`
   transform: translateY();
@@ -659,7 +660,7 @@ const StyledBackVideo = styled.div`
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, ${(props) => (props.load ? "-50%" : "50%")});
+    transform: translate(-50%, ${(props) => (props.load ? '-50%' : '50%')});
     min-width: 100%;
     min-height: 100%;
     width: auto;
@@ -681,18 +682,18 @@ const StyledBackVideo = styled.div`
       display: block;
     }
   }
-`;
+`
 
 export async function getServerSideProps() {
-  const { API_URL } = process.env;
+  const { API_URL } = process.env
 
-  const resNav = await fetch(`${API_URL}/menu-links`);
-  const resSocial = await fetch(`${API_URL}/social-medias`);
-  const resContact = await fetch(`${API_URL}/contactos`);
+  const resNav = await fetch(`${API_URL}/menu-links`)
+  const resSocial = await fetch(`${API_URL}/social-medias`)
+  const resContact = await fetch(`${API_URL}/contactos`)
 
-  const dataNav = await resNav.json();
-  const dataSocial = await resSocial.json();
-  const dataContact = await resContact.json();
+  const dataNav = await resNav.json()
+  const dataSocial = await resSocial.json()
+  const dataContact = await resContact.json()
 
   return {
     props: {
@@ -700,5 +701,5 @@ export async function getServerSideProps() {
       linksSocial: dataSocial,
       contact: dataContact,
     },
-  };
+  }
 }

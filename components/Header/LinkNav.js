@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import styled from "@emotion/styled";
-import Link from "next/link";
-import Point from "../Logos/Point";
+import React, { useState } from 'react'
+import styled from '@emotion/styled'
+import Link from 'next/link'
+import Point from '../Logos/Point'
 
 export default function LinkNav({ links, first, color }) {
-  const [active, setActive] = useState(first);
+  const [active, setActive] = useState(first)
 
   const LinkItems = () => {
-    var items = [];
-    var mayor = active + 2;
-    var menor = active - 2;
+    const items = []
+    const mayor = active + 2
+    const menor = active - 2
 
-    var a = [];
+    const a = []
     links.map((link, index) => {
-      a.push([index, link.Link, link.Titulo, link.order]);
-    });
+      a.push([index, link.Link, link.Titulo, link.order])
+    })
     a.sort((a, b) => {
-      return a[3] - b[3];
-    });
+      return a[3] - b[3]
+    })
 
     a.map((link, index) => {
       items.push(
@@ -25,57 +25,57 @@ export default function LinkNav({ links, first, color }) {
           key={index}
           className={
             index < mayor && index > menor
-              ? index == active
-                ? "item active"
+              ? index === active
+                ? 'item active'
                 : index < active
-                ? "item active-left"
-                : "item active-right"
+                ? 'item active-left'
+                : 'item active-right'
               : index >= mayor
-              ? "item item-null-right"
-              : "item item-null-left"
+              ? 'item item-null-right'
+              : 'item item-null-left'
           }
         >
           <Link href={link[1]}>
             <a>{link[2]}</a>
           </Link>
         </li>
-      );
-    });
+      )
+    })
 
-    return items;
-  };
+    return items
+  }
 
   const ClickRight = () => {
-    active < links.length - 1 && setActive(active + 1);
-  };
+    active < links.length - 1 && setActive(active + 1)
+  }
 
   const ClickLeft = () => {
-    active > 0 && setActive(active - 1);
-  };
+    active > 0 && setActive(active - 1)
+  }
 
   return (
     <StyledLinkNav color={color}>
       <Point
-        active={active <= 0 ? false : true}
+        active={!(active <= 0)}
         onClickHandle={ClickLeft}
-        color={color == "1" ? true : false}
+        color={color === '1'}
         fillstroke="#3b3b3b"
         fillmed="#021154"
       />
       <ul>{LinkItems()}</ul>
       <Point
-        active={active >= links.length - 1 ? false : true}
+        active={!(active >= links.length - 1)}
         onClickHandle={ClickRight}
-        color={color == "1" ? true : false}
+        color={color === '1'}
         fillstroke="#3b3b3b"
         fillmed="#021154"
       />
     </StyledLinkNav>
-  );
+  )
 }
 
 const StyledLinkNav = styled.div`
-  font-family: "Raleway", sans-serif;
+  font-family: 'Raleway', sans-serif;
   position: relative;
   width: 100%;
   margin: 0;
@@ -106,7 +106,7 @@ const StyledLinkNav = styled.div`
       a {
         text-transform: uppercase;
         text-decoration: none;
-        color: ${(props) => (props.color ? "#fff" : "#3b3b3b")};
+        color: ${(props) => (props.color ? '#fff' : '#3b3b3b')};
         font-weight: 300;
       }
     }
@@ -165,4 +165,4 @@ const StyledLinkNav = styled.div`
   @media screen and (min-width: 900px) {
     width: 500px;
   }
-`;
+`

@@ -56,25 +56,6 @@ export default function Projects({ links, linksSocial, loader, dataProjects }) {
                     </div>
                   </a>
                 </Link>
-                {item.link_modelo !== '' && (
-                  <Link href={`/modelsreview/${item.link_modelo}`}>
-                    <a className="linkModel">
-                      <div className="btn3d">
-                        <div className="cube">
-                          <figure className="back "></figure>
-                          <figure className="left"></figure>
-                          <figure className="bottom"></figure>
-                          <figure className="front"></figure>
-                          <figure className="right"></figure>
-                          <figure className="top"></figure>
-                        </div>
-                        <div className="view">
-                          <p>view 3D</p>
-                        </div>
-                      </div>
-                    </a>
-                  </Link>
-                )}
               </StyledItem>
             )
           })}

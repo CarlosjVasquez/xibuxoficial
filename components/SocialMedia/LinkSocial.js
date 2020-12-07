@@ -1,6 +1,6 @@
-import styled from "@emotion/styled";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Link from "next/link";
+import styled from '@emotion/styled'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
 
 export default function LinkSocial({ linksSocial, socialActive }) {
   const SocialLink = linksSocial.map((item, index) => {
@@ -9,7 +9,7 @@ export default function LinkSocial({ linksSocial, socialActive }) {
         <div
           key={index}
           className={
-            socialActive == 1
+            socialActive === 1
               ? `socialLinkShow socialLink-${index}`
               : `socialLink-${index} socialLinkHide`
           }
@@ -17,23 +17,23 @@ export default function LinkSocial({ linksSocial, socialActive }) {
           <Link href={item.Link}>
             <a>
               <FontAwesomeIcon
-                className={socialActive == 1 ? ` icon` : ` icon`}
-                icon={["fab", String(item.Name).toLowerCase()]}
+                className={socialActive === 1 ? ' icon' : ' icon'}
+                icon={['fab', String(item.Name).toLowerCase()]}
               />
             </a>
           </Link>
         </div>
-      );
+      )
     }
-  });
+  })
   return (
     <StyledLinkSocial links={linksSocial.length}>{SocialLink}</StyledLinkSocial>
-  );
+  )
 }
 
 function SocialLinks(links) {
-  let styles = "";
-  let second = 0;
+  let styles = ''
+  let second = 0
   for (let i = 0; i < links; i += 1) {
     styles += `
       .socialLink-${i} {
@@ -41,10 +41,10 @@ function SocialLinks(links) {
         transition: 0.5s cubic-bezier(0.51, -0.77, 0.51, 1.77);
         transition-delay: ${second}s;
       }
-    `;
-    second += 0.05;
+    `
+    second += 0.05
   }
-  return styles;
+  return styles
 }
 
 const StyledLinkSocial = styled.div`
@@ -59,4 +59,4 @@ const StyledLinkSocial = styled.div`
   .socialLinkHide {
     transform: translateX(-250%);
   }
-`;
+`

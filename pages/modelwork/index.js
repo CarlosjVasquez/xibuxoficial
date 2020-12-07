@@ -1,10 +1,10 @@
-import styled from "@emotion/styled";
-import Head from "next/head";
-import { useState, useRef, useEffect } from "react";
-import Link from "next/link";
+import styled from '@emotion/styled'
+import Head from 'next/head'
+import { useState, useRef, useEffect } from 'react'
+import Link from 'next/link'
 
-import Header from "components/Header/Header";
-import SocialMedia from "components/SocialMedia";
+import Header from 'components/Header/Header'
+import SocialMedia from 'components/SocialMedia'
 
 export default function PagesWorks({
   links,
@@ -12,19 +12,19 @@ export default function PagesWorks({
   loader,
   dataProject,
 }) {
-  const [activeMenu, setActiveMenu] = useState(1);
-  const [load, setLoad] = useState(false);
-  const container = useRef();
+  const [activeMenu, setActiveMenu] = useState(1)
+  const [load, setLoad] = useState(false)
+  const container = useRef()
 
   useEffect(() => {
     if (container.current && !loader) {
       setTimeout(() => {
-        setLoad(true);
-      }, 500);
+        setLoad(true)
+      }, 500)
     } else if (loader) {
-      setLoad(false);
+      setLoad(false)
     }
-  });
+  })
 
   return (
     <>
@@ -34,7 +34,7 @@ export default function PagesWorks({
       <Header
         links={links}
         first={1}
-        onHandleClick={() => setActiveMenu(activeMenu == 1 ? 0 : 1)}
+        onHandleClick={() => setActiveMenu(activeMenu === 1 ? 0 : 1)}
         active={activeMenu}
         load={load}
         backActive={true}
@@ -65,7 +65,7 @@ export default function PagesWorks({
                         <img src={item.url} alt="" />
                       </div>
                     </StyledItem>
-                  );
+                  )
                 })}
             </StyledGallery>
           </StyledContainer>
@@ -92,7 +92,7 @@ export default function PagesWorks({
         </>
       )}
     </>
-  );
+  )
 }
 
 const StyledContact = styled.div`
@@ -153,7 +153,7 @@ const StyledContact = styled.div`
       font-size: 1.5rem;
     }
   }
-`;
+`
 
 const StyledGallery = styled.div`
   display: flex;
@@ -162,7 +162,7 @@ const StyledGallery = styled.div`
   justify-content: space-around;
   max-width: 1280px;
   width: 100%;
-`;
+`
 
 const StyledItem = styled.div`
   position: relative;
@@ -173,7 +173,7 @@ const StyledItem = styled.div`
   overflow: hidden;
   margin-bottom: 10px;
   &:before {
-    content: "";
+    content: '';
     display: block;
     width: 100%;
     padding-top: 56.25%;
@@ -193,7 +193,7 @@ const StyledItem = styled.div`
       min-height: 100%;
     }
   }
-`;
+`
 
 const StyledMain = styled.div`
   display: flex;
@@ -217,7 +217,7 @@ const StyledMain = styled.div`
     font-weight: 400;
     margin-bottom: 60px;
   }
-`;
+`
 
 const StyledContainer = styled.div`
   width: 100%;
@@ -229,16 +229,16 @@ const StyledContainer = styled.div`
   padding: 100px 50px;
   overflow: hidden;
   &::before {
-    content: "";
+    content: '';
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url("https://res.cloudinary.com/carlosvv18/image/upload/v1606948632/p63bs85braqp72ze7eub.png");
+    background: url('https://res.cloudinary.com/carlosvv18/image/upload/v1606948632/p63bs85braqp72ze7eub.png');
     background-size: 200px 200px;
   }
-`;
+`
 
 const StyledBanner = styled.div`
   position: relative;
@@ -256,20 +256,18 @@ const StyledBanner = styled.div`
     width: 100%;
     height: 100%;
   }
-`;
+`
 
 export async function getServerSideProps({ query }) {
-  const { API_URL } = process.env;
+  const { API_URL } = process.env
 
-  console.log(query.cd);
+  const resNav = await fetch(`${API_URL}/menu-links`)
+  const resSocial = await fetch(`${API_URL}/social-medias`)
+  const resProject = await fetch(`${API_URL}/proyectos/${query.cd}`)
 
-  const resNav = await fetch(`${API_URL}/menu-links`);
-  const resSocial = await fetch(`${API_URL}/social-medias`);
-  const resProject = await fetch(`${API_URL}/proyectos/${query.cd}`);
-
-  const dataNav = await resNav.json();
-  const dataSocial = await resSocial.json();
-  const dataProject = await resProject.json();
+  const dataNav = await resNav.json()
+  const dataSocial = await resSocial.json()
+  const dataProject = await resProject.json()
 
   return {
     props: {
@@ -277,5 +275,5 @@ export async function getServerSideProps({ query }) {
       linksSocial: dataSocial,
       dataProject: dataProject,
     },
-  };
+  }
 }
