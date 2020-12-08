@@ -1,12 +1,15 @@
 import styled from '@emotion/styled'
 import Head from 'next/head'
 import { useState, useRef, useEffect } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+import Back from 'components/Button/BackStyle1'
 import Header from 'components/Header/Header'
 import SocialMedia from 'components/SocialMedia'
+import YoutubeVideo from 'components/YoutubeVideo'
+import Description from 'components/Description/BoxStyle1'
+import Gallery from 'components/Gallery/GalleryStyle1'
+import Button from 'components/Button/ButtonStyle1'
+import Contact from 'components/Description/BoxStyle2'
 
 export default function PagesWorks({
   links,
@@ -17,7 +20,6 @@ export default function PagesWorks({
   const [activeMenu, setActiveMenu] = useState(1)
   const [load, setLoad] = useState(false)
   const container = useRef()
-  const router = useRouter()
 
   useEffect(() => {
     if (container.current && !loader) {
@@ -40,287 +42,53 @@ export default function PagesWorks({
         onHandleClick={() => setActiveMenu(activeMenu === 1 ? 0 : 1)}
         active={activeMenu}
         load={load}
-        backActive={true}
+        white={true}
+        pattern={true}
       />
-      <SocialMedia linksSocial={linksSocial} />
+      <SocialMedia linksSocial={linksSocial} color="#fff" />
       {dataProject && (
-        <>
+        <StyledContent>
           <StyledContainer ref={container}>
-            <StyleBack onClick={() => router.back()}>
-              <div className="btn">
-                <FontAwesomeIcon icon={['fas', 'long-arrow-alt-left']} />
-                <a>Back</a>
-              </div>
-            </StyleBack>
-            <StyledBanner>
-              <iframe
-                id="video"
-                src={`https://www.youtube.com/embed/${dataProject.youtube_video}`}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </StyledBanner>
+            <Back color="#fff" />
+            <YoutubeVideo url={dataProject.youtube_video} />
             {dataProject.titulo !== null && (
-              <StyledMain>
-                <h1>{dataProject.titulo}</h1>
-                {dataProject.short_description !== null && (
-                  <p>{dataProject.short_description}</p>
-                )}
-              </StyledMain>
+              <Description
+                title={dataProject.titulo}
+                description={dataProject.short_description}
+              />
             )}
-
             {dataProject.gallery !== null && (
-              <StyledGallery>
-                {dataProject.gallery.map((item, key) => {
-                  return (
-                    <StyledItem key={key}>
-                      <div className="img-back">
-                        <img src={item.url} alt="" />
-                      </div>
-                    </StyledItem>
-                  )
-                })}
-              </StyledGallery>
+              <Gallery gallery={dataProject.gallery} />
             )}
             {dataProject.link_modelo !== null && (
-              <StyledBtnModel>
-                <Link href={`/modelsreview/${dataProject.link_modelo}`}>
-                  <a>View Model 3D</a>
-                </Link>
-              </StyledBtnModel>
+              <Button
+                url={`/modelsreview/${dataProject.link_modelo}`}
+                title="View Model 3D"
+                margin="80px"
+              />
             )}
           </StyledContainer>
-          <StyledContact>
-            <div className="cont">
-              <div className="description">
-                <p>
-                  We work tirelessly to make your animation just plain awesome
-                </p>
-                <div className="space"></div>
-                <p>
-                  Feel free to ask any questions and we will find suitable
-                  option
-                  <br /> just for you. Are you ready to start?
-                </p>
-              </div>
-              <Link href="/contact">
-                <div className="btn">
-                  <a>Contact</a>
-                </div>
-              </Link>
-            </div>
-          </StyledContact>
-        </>
+          <Contact />
+        </StyledContent>
       )}
     </>
   )
 }
 
-const StyledBtnModel = styled.a`
-  position: relative;
-  height: 80px;
+const StyledContent = styled.div`
   width: 100%;
-  margin-top: 80px;
-  a {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    padding: 15px 25px;
-    border-radius: 5px;
-    background: #2e3547;
-    color: #fff;
-    font-size: 1.5rem;
-    font-family: Raleway;
-    font-weight: 400;
-  }
-`
-
-const StyleBack = styled.div`
-  position: relative;
-  height: 40px;
-  width: 100%;
-  max-width: 1280px;
-  margin-bottom: 20px;
-  .btn {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    transform: translateY(-50%);
-    cursor: pointer;
-    a {
-      margin-left: 5px;
-    }
-  }
-`
-
-const StyledContact = styled.div`
-  position: relative;
-  .cont {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: #f07241;
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: Raleway;
-    z-index: 1;
-  }
-
-  .description {
-    width: 100%;
-    text-align: center;
-    font-size: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: #fff;
-    margin-bottom: 30px;
-    .space {
-      width: 150px;
-      height: 3px;
-      background: #fff;
-      margin: 15px;
-    }
-  }
-  .btn {
-    padding: 10px 20px;
-    background: #2e3547;
-    color: #fff;
-    border-radius: 8px;
-    box-shadow: 0px 0px 5px 0px #2e3547;
-    cursor: pointer;
-    &:hover {
-      background: #2e3547ee;
-    }
-  }
-  @media only screen and (min-width: 1000px) {
-    .cont {
-      padding: 60px 30px;
-    }
-
-    .description {
-      font-size: 2.5rem;
-      max-width: 1280px;
-      margin-bottom: 60px;
-    }
-    .btn {
-      padding: 10px 40px;
-      font-size: 1.5rem;
-    }
-  }
-`
-
-const StyledGallery = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  max-width: 1280px;
-  width: 100%;
-`
-
-const StyledItem = styled.div`
-  position: relative;
-  width: 49%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  margin-bottom: 10px;
-  &:before {
-    content: '';
-    display: block;
-    width: 100%;
-    padding-top: 56.25%;
-  }
-  .img-back {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1);
-    width: 100%;
-    height: 100%;
-    transition: all 1s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    img {
-      min-height: 100%;
-    }
-  }
-`
-
-const StyledMain = styled.div`
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  width: 100%;
-  max-width: 1280px;
-  padding: 60px 0px;
-  color: #3b3b3b;
-  z-index: 1;
-  h1 {
-    text-align: center;
-    margin-bottom: 25px;
-    border-bottom: solid 2px #3b3b3b;
-    font-size: calc(1rem+1vw);
-  }
-  p {
-    text-align: center;
-    font-size: calc(1rem+1vw);
-    font-weight: 400;
-    margin-bottom: 60px;
-  }
+  background: url('https://res.cloudinary.com/carlosvv18/image/upload/v1607394910/g1vb0bafp8pbkm7hesed.jpg');
+  background-size: 200px 200px;
 `
-
 const StyledContainer = styled.div`
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: #fff;
-  padding: 100px 50px;
-  overflow: hidden;
-  &::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('https://res.cloudinary.com/carlosvv18/image/upload/v1606948632/p63bs85braqp72ze7eub.png');
-    background-size: 200px 200px;
-  }
-`
-
-const StyledBanner = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
   max-width: 1280px;
-  padding-top: 56.25%;
-  iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
+  padding: 100px 50px;
 `
 
 export async function getServerSideProps({ query }) {

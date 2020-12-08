@@ -33,73 +33,74 @@ export default function Projects({ links, linksSocial, loader, dataProjects }) {
         onHandleClick={() => setActiveMenu(activeMenu === 1 ? 0 : 1)}
         active={activeMenu}
         load={load}
-        backActive={true}
+        white={true}
+        pattern={true}
       />
-      <SocialMedia linksSocial={linksSocial} />
-      <StyledContainer ref={container}>
-        <StyledProject>
-          {dataProjects.map((item, key) => {
-            return (
-              <StyledItem key={key}>
-                <Link
-                  href={{
-                    pathname: '/modelwork',
-                    query: { id: item.titulo, cd: item.id },
-                  }}
-                >
-                  <a>
-                    <div className="img-back">
-                      <img src={item.banner.url} alt="" />
-                    </div>
-                    <div className="des-item">
-                      <h1>{item.titulo}</h1>
-                    </div>
-                  </a>
-                </Link>
-                {item.link_modelo !== null && (
-                  <Link href={`/modelsreview/${item.link_modelo}`}>
-                    <a className="linkModel">
-                      <div className="btn3d">
-                        <div className="cube">
-                          <figure className="back "></figure>
-                          <figure className="left"></figure>
-                          <figure className="bottom"></figure>
-                          <figure className="front"></figure>
-                          <figure className="right"></figure>
-                          <figure className="top"></figure>
-                        </div>
-                        <div className="view">
-                          <p>view 3D</p>
-                        </div>
+      <SocialMedia linksSocial={linksSocial} color="#fff" />
+      <StyledContent>
+        <StyledContainer ref={container}>
+          <StyledProject>
+            {dataProjects.map((item, key) => {
+              return (
+                <StyledItem key={key}>
+                  <Link
+                    href={{
+                      pathname: '/modelwork',
+                      query: { id: item.titulo, cd: item.id },
+                    }}
+                  >
+                    <a>
+                      <div className="img-back">
+                        <img src={item.banner.url} alt="" />
+                      </div>
+                      <div className="des-item">
+                        <h1>{item.titulo}</h1>
                       </div>
                     </a>
                   </Link>
-                )}
-              </StyledItem>
-            )
-          })}
-        </StyledProject>
-      </StyledContainer>
+                  {item.link_modelo !== null && (
+                    <Link href={`/modelsreview/${item.link_modelo}`}>
+                      <a className="linkModel">
+                        <div className="btn3d">
+                          <div className="cube">
+                            <figure className="back "></figure>
+                            <figure className="left"></figure>
+                            <figure className="bottom"></figure>
+                            <figure className="front"></figure>
+                            <figure className="right"></figure>
+                            <figure className="top"></figure>
+                          </div>
+                          <div className="view">
+                            <p>view 3D</p>
+                          </div>
+                        </div>
+                      </a>
+                    </Link>
+                  )}
+                </StyledItem>
+              )
+            })}
+          </StyledProject>
+        </StyledContainer>
+      </StyledContent>
     </>
   )
 }
 
+const StyledContent = styled.div`
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: url('https://res.cloudinary.com/carlosvv18/image/upload/v1607394910/g1vb0bafp8pbkm7hesed.jpg');
+  background-size: 200px 200px;
+`
 const StyledContainer = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #fff;
-  &::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('https://res.cloudinary.com/carlosvv18/image/upload/v1606948632/p63bs85braqp72ze7eub.png');
-    background-size: 200px 200px;
-  }
+  max-width: 1280px;
+  padding: 100px 50px;
 `
 
 const StyledProject = styled.div`
@@ -120,6 +121,7 @@ const StyledItem = styled.div`
   align-items: center;
   overflow: hidden;
   margin-bottom: 10px;
+  box-shadow: 0px 0px 5px #ffffff77;
   &:before {
     content: '';
     display: block;

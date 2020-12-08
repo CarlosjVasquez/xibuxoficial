@@ -336,7 +336,7 @@ export default function Contact({ links, linksSocial, contact, loader }) {
       </Head>
       <Header
         links={links}
-        first={2}
+        first={4}
         onHandleClick={() => setActiveMenu(activeMenu === 1 ? 0 : 1)}
         active={activeMenu}
         load={load}

@@ -13,6 +13,7 @@ export default function Header({
   project,
   scrollActive,
   backActive,
+  pattern,
 }) {
   const [mode, setMode] = useState(white)
   const [back, setBack] = useState(
@@ -47,6 +48,11 @@ export default function Header({
         box={back ? '0px 0px 4px 0px #3b3b3b99' : 'none'}
         load={load}
         project={project}
+        pattern={
+          pattern
+            ? 'https://res.cloudinary.com/carlosvv18/image/upload/v1607394910/g1vb0bafp8pbkm7hesed.jpg'
+            : ''
+        }
       >
         <div className="cont-header">
           <div className="logo">
@@ -84,9 +90,11 @@ const HeaderStyled = styled.header`
   height: 80px;
   z-index: ${(props) => (props.project ? 0 : 15)};
   background: ${(props) => props.back};
+  background-image: url(${(props) => props.pattern});
   box-shadow: ${(props) => props.box};
   transform: translateY(${(props) => (props.load ? '0' : '-100%')});
   transition: all 0.3s linear;
+
   .cont-header {
     display: flex;
     flex-direction: row;
