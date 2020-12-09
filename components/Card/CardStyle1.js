@@ -33,7 +33,7 @@ export default function CardStyle1({
       <LinkNew active={active} path={path} query={query}>
         <a target={youtubeOnly ? '_blank' : '_self'}>
           <div className="img-back">
-            <img src={bannerUrl} alt="" />
+            {bannerUrl !== null && <img src={bannerUrl} alt="" />}
           </div>
           <CountDown
             target={releaseDate}
