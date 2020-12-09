@@ -21,5 +21,6 @@ module.exports = {
     'array-callback-return': 'off',
     'lines-between-class-members': 'off',
     'dot-notation': 'off',
+    'react/no-unescaped-entities': 'off',
   },
 }

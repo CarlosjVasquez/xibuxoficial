@@ -82,8 +82,17 @@ const StyledContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: url('https://res.cloudinary.com/carlosvv18/image/upload/v1607394910/g1vb0bafp8pbkm7hesed.jpg');
-  background-size: 200px 200px;
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://res.cloudinary.com/carlosvv18/image/upload/v1607394910/g1vb0bafp8pbkm7hesed.jpg');
+    background-size: 200px 200px;
+    z-index: -1;
+  }
 `
 const StyledContainer = styled.div`
   width: 100%;
