@@ -24,6 +24,10 @@ export default function Projects({ links, linksSocial, loader, dataProjects }) {
                   ? `/modelsreview/${item.link_modelo}`
                   : ''
               }
+              youtubeOnly={item.only_youtube}
+              youtubeUrl={item.youtube_video}
+              premiere={item.premiere}
+              releaseDate={item.release_date}
             />
           )
         })}
