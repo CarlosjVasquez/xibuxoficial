@@ -39,6 +39,12 @@ export default class Fragrance extends Component {
     vid.muted = true
     vid.play()
 
+    const aud = document.createElement('audio')
+    aud.src =
+      'https://res.cloudinary.com/carlosvv18/video/upload/v1607962054/u6xp5gtvgoh95b25lyh6.mp3'
+    aud.crossOrigin = 'Anonymous'
+    aud.loop = true
+
     this.videoTexture = new THREE.VideoTexture(vid)
     this.videoTexture.format = THREE.RGBFormat
     this.videoTexture.generateMipmaps = false

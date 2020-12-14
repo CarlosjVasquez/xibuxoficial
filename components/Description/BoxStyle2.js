@@ -1,16 +1,13 @@
 import styled from '@emotion/styled'
 import Button from 'components/Button/ButtonStyle1'
 
-export default function BoxStyled2() {
+export default function BoxStyled2({ text1, text2 }) {
   return (
     <StyledBox>
       <div className="description">
-        <p>We work tirelessly to make your animation just plain awesome</p>
+        <p>{text1}</p>
         <div className="space"></div>
-        <p>
-          Feel free to ask any questions and we will find suitable option
-          <br /> just for you. Are you ready to start?
-        </p>
+        <p>{text2}</p>
       </div>
       <Button url="/contact" title="Contact" margin="40px" />
     </StyledBox>

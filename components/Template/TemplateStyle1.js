@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react'
 
 import Header from 'components/Header/Header'
 import SocialMedia from 'components/SocialMedia'
+import Back from 'components/Button/BackStyle1'
 
 export default function TemplateStyle1({
   links,
@@ -37,7 +38,10 @@ export default function TemplateStyle1({
       <SocialMedia linksSocial={linksSocial} color="#fff" />
       <StyledContent>
         <StyledContainer ref={container}>
-          <StyledProject>{children}</StyledProject>
+          <StyledProject>
+            <Back color="#fff" />
+            {children}
+          </StyledProject>
         </StyledContainer>
       </StyledContent>
     </>

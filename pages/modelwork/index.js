@@ -16,6 +16,7 @@ export default function PagesWorks({
   linksSocial,
   loader,
   dataProject,
+  infoContact,
 }) {
   const [activeMenu, setActiveMenu] = useState(1)
   const [load, setLoad] = useState(false)
@@ -68,7 +69,7 @@ export default function PagesWorks({
               />
             )}
           </StyledContainer>
-          <Contact />
+          <Contact text1={infoContact.Title} text2={infoContact.Description} />
         </StyledContent>
       )}
     </>
@@ -106,16 +107,19 @@ export async function getServerSideProps({ query }) {
   const resNav = await fetch(`${API_URL}/menu-links`)
   const resSocial = await fetch(`${API_URL}/social-medias`)
   const resProject = await fetch(`${API_URL}/proyectos/${query.cd}`)
+  const resContact = await fetch(`${API_URL}/contact-dir`)
 
   const dataNav = await resNav.json()
   const dataSocial = await resSocial.json()
   const dataProject = await resProject.json()
+  const dataContact = await resContact.json()
 
   return {
     props: {
       links: dataNav,
       linksSocial: dataSocial,
       dataProject: dataProject,
+      infoContact: dataContact,
     },
   }
 }

@@ -2,10 +2,17 @@ import Head from 'next/head'
 import Header from '../components/Header/Header'
 import SocialMedia from '../components/SocialMedia'
 import styled from '@emotion/styled'
+import Contact from 'components/Description/BoxStyle2'
 
 import { useEffect, useRef, useState } from 'react'
 
-export default function About({ links, linksSocial, infoAbout, loader }) {
+export default function About({
+  links,
+  linksSocial,
+  infoAbout,
+  loader,
+  infoContact,
+}) {
   const [activeMenu, setActiveMenu] = useState(1)
   const [load, setLoad] = useState(false)
   const [showTeam, setShowTeam] = useState(false)
@@ -17,7 +24,6 @@ export default function About({ links, linksSocial, infoAbout, loader }) {
   const banner = useRef()
   const des = useRef()
   const team = useRef()
-  const contact = useRef()
 
   useEffect(() => {
     const scrollTeam = () => {
@@ -40,7 +46,6 @@ export default function About({ links, linksSocial, infoAbout, loader }) {
   useEffect(() => {
     if (
       team.current &&
-      contact.current &&
       des.current &&
       banner.current &&
       imgUno &&
@@ -124,83 +129,26 @@ export default function About({ links, linksSocial, infoAbout, loader }) {
           </div>
           <div className="team">
             {infoAbout[0].teams.map((item, key) => (
-              <div key={key} className="user-team">
+              <div key={key} className="user-team" title={item.name}>
+                <div className="avatar">
+                  <img src={item.avatar.url} alt={item.name} />
+                </div>
+                <div className="space"></div>
                 <div className="data-user">
                   <h1>
                     {item.name} {item.last_name}
                   </h1>
                   <h3>{item.position}</h3>
                 </div>
-                <div className="space"></div>
-                <div className="avatar">
-                  <img src={item.avatar.url} alt="" />
-                </div>
               </div>
             ))}
           </div>
         </div>
       </StyledTeam>
-      <StyledContact ref={contact}>
-        <div className="description">
-          <p>{infoAbout[0].titulo_contact}</p>
-          <div className="space"></div>
-          <p>{infoAbout[0].des_contact}</p>
-        </div>
-        <div className="btn">
-          <p>Contact</p>
-        </div>
-      </StyledContact>
+      <Contact text1={infoContact.Title} text2={infoContact.Description} />
     </>
   )
 }
-
-const StyledContact = styled.div`
-  width: 100%;
-  background: #f07241;
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: Raleway;
-  .description {
-    width: 100%;
-    text-align: center;
-    font-size: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: #fff;
-    margin-bottom: 30px;
-    .space {
-      width: 150px;
-      height: 3px;
-      background: #fff;
-      margin: 15px;
-    }
-  }
-  .btn {
-    padding: 10px 20px;
-    background: #2e3547;
-    color: #fff;
-    border-radius: 8px;
-    box-shadow: 0px 0px 5px 0px #2e3547;
-    &:hover {
-      background: #2e3547ee;
-    }
-  }
-  @media only screen and (min-width: 1000px) {
-    padding: 60px 30px;
-    .description {
-      font-size: 2.5rem;
-      max-width: 1280px;
-      margin-bottom: 60px;
-    }
-    .btn {
-      padding: 10px 40px;
-      font-size: 1.5rem;
-    }
-  }
-`
 
 const StyledTeam = styled.div`
   width: 100%;
@@ -461,16 +409,19 @@ export async function getServerSideProps() {
   const resNav = await fetch(`${API_URL}/menu-links`)
   const resSocial = await fetch(`${API_URL}/social-medias`)
   const resAbout = await fetch(`${API_URL}/abouts`)
+  const resContact = await fetch(`${API_URL}/contact-dir`)
 
   const dataNav = await resNav.json()
   const dataSocial = await resSocial.json()
   const dataAbout = await resAbout.json()
+  const dataContact = await resContact.json()
 
   return {
     props: {
       links: dataNav,
       linksSocial: dataSocial,
       infoAbout: dataAbout,
+      infoContact: dataContact,
     },
   }
 }

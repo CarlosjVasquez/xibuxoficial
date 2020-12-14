@@ -6,6 +6,7 @@ import styled from '@emotion/styled'
 
 import Header from 'components/Header/Header'
 import SocialMedia from 'components/SocialMedia'
+import RedirectModels from 'components/RedirectModels/RedirectModels'
 
 const Scene2 = dynamic(() => import('components/ModelsReview/Fragrance'), {
   ssr: false,
@@ -43,6 +44,12 @@ export default function Home({ links, linksSocial, loader, model }) {
       <SocialMedia linksSocial={linksSocial} color="#fff" />
       <StyledContainer ref={container} load={load}>
         <Scene2 />
+        <RedirectModels
+          pathname="/modelwork"
+          id="Fragranc"
+          cd="9"
+          audioUrl="https://res.cloudinary.com/carlosvv18/video/upload/v1607962054/u6xp5gtvgoh95b25lyh6.mp3"
+        />
       </StyledContainer>
     </StyledIndex>
   )
