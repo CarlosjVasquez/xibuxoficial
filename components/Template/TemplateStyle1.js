@@ -54,7 +54,6 @@ const StyledProject = styled.div`
   flex-wrap: wrap;
   justify-content: space-around;
   width: 100%;
-  padding: 50px 50px;
 `
 
 const StyledContent = styled.div`
@@ -71,12 +70,13 @@ const StyledContent = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('https://res.cloudinary.com/carlosvv18/image/upload/v1607394910/g1vb0bafp8pbkm7hesed.jpg');
+    background: url('https://res.cloudinary.com/carlosvv18/image/upload/v1608329792/ucqxwulsmvshyrzwr8cc.jpg');
     background-size: 200px 200px;
+    z-index: -1;
   }
 `
 const StyledContainer = styled.div`
   width: 100%;
   max-width: 1280px;
-  padding: 100px 50px;
+  padding: 80px 25px 50px 25px;
 `

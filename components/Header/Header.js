@@ -50,7 +50,7 @@ export default function Header({
         project={project}
         pattern={
           pattern
-            ? 'https://res.cloudinary.com/carlosvv18/image/upload/v1607394910/g1vb0bafp8pbkm7hesed.jpg'
+            ? 'https://res.cloudinary.com/carlosvv18/image/upload/v1608329792/ucqxwulsmvshyrzwr8cc.jpg'
             : ''
         }
       >
@@ -91,6 +91,7 @@ const HeaderStyled = styled.header`
   z-index: ${(props) => (props.project ? 0 : 15)};
   background: ${(props) => props.back};
   background-image: url(${(props) => props.pattern});
+  background-size: 200px 200px;
   box-shadow: ${(props) => props.box};
   transform: translateY(${(props) => (props.load ? '0' : '-100%')});
   transition: all 0.3s linear;
