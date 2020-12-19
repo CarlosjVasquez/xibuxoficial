@@ -307,8 +307,8 @@ export default function Contact({ links, linksSocial, contact, loader }) {
     `
 
     const raw = JSON.stringify({
-      to: 'virahondacarloscl@gmail.com',
-      from: 'virahondacarlos@gmail.com',
+      to: 'contact@xibux.com',
+      from: 'contact@xibux.com',
       replyTo: 'no-reply@gmail.com',
       subject: 'Xibux Web Contact',
       html: html,
