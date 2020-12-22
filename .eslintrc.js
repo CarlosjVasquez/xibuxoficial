@@ -22,5 +22,6 @@ module.exports = {
     'lines-between-class-members': 'off',
     'dot-notation': 'off',
     'react/no-unescaped-entities': 'off',
+    'no-unneeded-ternary': 'off',
   },
 }

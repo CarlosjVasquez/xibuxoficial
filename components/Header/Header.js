@@ -113,7 +113,11 @@ const HeaderStyled = styled.header`
       }
     }
     .menu {
+      position: absolute;
+      width: 80%;
       height: 100%;
+      top: 0;
+      left: 50%;
       display: flex;
       flex-direction: row;
       justify-content: center;
@@ -121,10 +125,10 @@ const HeaderStyled = styled.header`
       transition: 0.5s cubic-bezier(0.5, -0.5, 0.5, 1.5);
     }
     .show-menu {
-      transform: translateY(0%);
+      transform: translate(-50%, 0%);
     }
     .hide-menu {
-      transform: translateY(-100%);
+      transform: translate(-50%, -100%);
     }
     .btn {
       height: 100%;
@@ -136,6 +140,9 @@ const HeaderStyled = styled.header`
   @media screen and (min-width: 500px) {
     .cont-header {
       justify-content: space-between;
+      .menu {
+        width: auto;
+      }
       .logo {
         display: block;
         height: 50px;

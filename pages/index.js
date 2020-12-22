@@ -6,7 +6,7 @@ import styled from '@emotion/styled'
 
 import Header from '../components/Header/Header'
 import SocialMedia from '../components/SocialMedia'
-import Slider from '../components/Sliders/SliderOne'
+import Slider from '../components/Sliders/SliderTwo'
 import ContentDetail from '../components/ContentDetail/ContentDetail'
 
 const SceneOne = dynamic(() => import('../components/Scenes/SceneThree'), {
