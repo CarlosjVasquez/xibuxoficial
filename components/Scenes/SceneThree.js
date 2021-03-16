@@ -1,16 +1,16 @@
 import styled from '@emotion/styled'
-import * as THREE from 'three'
-import { Canvas } from 'react-three-fiber'
-import { OrbitControls } from 'drei'
+// import * as THREE from 'three'
+// import { Canvas } from 'react-three-fiber'
+// import { OrbitControls } from 'drei'
 
-import { Suspense } from 'react'
-import Model from './Model'
+// import { Suspense } from 'react'
+// import Model from './Model'
 
 export default function SceneThree({ category, active, project }) {
   return (
     <StyledCanvas>
       <div className={project ? 'active scene' : 'inactive scene'}>
-        <Canvas
+        {/* <Canvas
           pixelRatio={window.devicePixelRatio}
           camera={{ position: [0, 0, 20] }}
           gl={{ antialias: true }}
@@ -39,7 +39,7 @@ export default function SceneThree({ category, active, project }) {
                 })}
             </group>
           </Suspense>
-        </Canvas>
+        </Canvas> */}
       </div>
     </StyledCanvas>
   )

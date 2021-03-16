@@ -333,7 +333,10 @@ export default function Contact({ links, linksSocial, contact, loader }) {
       body: raw,
     }
 
-    await fetch('https://xibuxcms.herokuapp.com/email', requestOptions)
+    await fetch(
+      'https://xibuxcms-307615.rj.r.appspot.com/email',
+      requestOptions
+    )
       .then((response) => response.text())
       .then(() => confirmSend())
       .catch((error) => errorSend(error))
@@ -346,7 +349,7 @@ export default function Contact({ links, linksSocial, contact, loader }) {
       </Head>
       <Header
         links={links}
-        first={4}
+        first={3}
         onHandleClick={() => setActiveMenu(activeMenu === 1 ? 0 : 1)}
         active={activeMenu}
         load={load}
