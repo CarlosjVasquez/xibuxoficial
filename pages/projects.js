@@ -28,6 +28,7 @@ export default function Projects({ links, linksSocial, loader, dataProjects }) {
               youtubeUrl={item.youtube_video}
               premiere={item.premiere}
               releaseDate={item.release_date}
+              order={item.order}
             />
           )
         })}

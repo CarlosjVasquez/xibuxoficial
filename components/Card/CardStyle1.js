@@ -13,6 +13,7 @@ export default function CardStyle1({
   youtubeUrl,
   premiere,
   releaseDate,
+  order,
 }) {
   const [query, setQuery] = useState()
   const [path, setPath] = useState()
@@ -29,7 +30,7 @@ export default function CardStyle1({
   }, [youtubeOnly])
 
   return (
-    <StyledCard>
+    <StyledCard order={order}>
       <LinkNew active={active} path={path} query={query}>
         <a target={youtubeOnly ? '_blank' : '_self'}>
           <div className="img-back">
@@ -58,6 +59,7 @@ const StyledCard = styled.div`
   overflow: hidden;
   margin-bottom: 1%;
   box-shadow: 0px 0px 5px #ffffff77;
+  order: ${({ order }) => order};
   &:before {
     content: '';
     display: block;
