@@ -56,6 +56,7 @@ export default function LinkNav({ links, first, color }) {
   return (
     <StyledLinkNav color={color}>
       <Point
+        invert={true}
         active={!(active <= 0)}
         onClickHandle={ClickLeft}
         color={color === '1'}

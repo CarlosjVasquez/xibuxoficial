@@ -9,6 +9,7 @@ import Gallery from 'components/Gallery/GalleryStyle1'
 import Button from 'components/Button/ButtonStyle1'
 import Contact from 'components/Description/BoxStyle2'
 import Template from 'components/Template/TemplateStyle1'
+import ShowMore from 'components/ShowMore/ShowMore'
 
 export default function PagesWorks({
   links,
@@ -36,6 +37,7 @@ export default function PagesWorks({
       <Head>
         <title>Xibux Studio - Models</title>
       </Head>
+      <ShowMore />
       <Header
         links={links}
         first={1}
