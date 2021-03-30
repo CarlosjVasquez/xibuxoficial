@@ -47,7 +47,7 @@ export default function Home({ links, linksSocial, loader, model }) {
         <RedirectModels
           pathname="/modelwork"
           id="Fragranc"
-          cd="9"
+          cd="24"
           audioUrl="https://res.cloudinary.com/carlosvv18/video/upload/v1607962054/u6xp5gtvgoh95b25lyh6.mp3"
         />
       </StyledContainer>

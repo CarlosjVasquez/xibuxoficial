@@ -47,7 +47,7 @@ export default function Home({ links, linksSocial, loader, model }) {
         <RedirectModels
           pathname="/modelwork"
           id="Architectural"
-          cd="8"
+          cd="26"
           audioUrl=""
         />
       </StyledContainer>

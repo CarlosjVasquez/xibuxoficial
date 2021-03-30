@@ -44,7 +44,7 @@ export default function Home({ links, linksSocial, loader }) {
       <SocialMedia linksSocial={linksSocial} color={'#fff'} />
       <StyledContainer ref={container} load={load}>
         <Scene3 />
-        <RedirectModels pathname="/modelwork" id="Wine" cd="10" audioUrl="" />
+        <RedirectModels pathname="/modelwork" id="Wine" cd="25" audioUrl="" />
       </StyledContainer>
     </StyledIndex>
   )

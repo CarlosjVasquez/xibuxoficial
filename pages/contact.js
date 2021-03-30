@@ -333,10 +333,7 @@ export default function Contact({ links, linksSocial, contact, loader }) {
       body: raw,
     }
 
-    await fetch(
-      'https://xibuxcms-307615.rj.r.appspot.com/email',
-      requestOptions
-    )
+    await fetch('https://xibux-cms.herokuapp.com/email', requestOptions)
       .then((response) => response.text())
       .then(() => confirmSend())
       .catch((error) => errorSend(error))
